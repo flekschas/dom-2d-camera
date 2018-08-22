@@ -6,9 +6,9 @@ independently of [game-shell](http://github.com/mikolalysenko/game-shell).
 
 Controls are as follows:
 
-* Rotate - Left click
-* Pan - Right click or Control + Left click
+* Pan - Left click
 * Zoom - Scroll or Shift + Left click
+* Rotate - Right click or Control + Left click
 
 Based heavily on
 [game-shell-orbit-camera](http://github.com/mikolalysenko/game-shell-orbit-camera).
@@ -27,6 +27,9 @@ The following options are available:
 * `rotate`: disable rotation interactions by passing `false`.
 * `scale`: disable scaling interactions by passing `false`.
 * `pan`: disable panning interactions by passing `false`.
+* `eye`: eye is the eye vector of the camera. defaults to `[0, 10, 30]`.
+* `center`: center is the target the camera is looking at `[0, 0, 0]`.
+* `up`: up is the up direction for the camera. defaults to `[0, 1, 0]`.
 
 See the [orbit-camera documentation](https://github.com/mikolalysenko/orbit-camera#readme)
 for a full list of available methods.

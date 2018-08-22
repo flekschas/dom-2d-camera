@@ -8,20 +8,19 @@ var panSpeed = 1
 
 module.exports = attachCamera
 
-function attachCamera(canvas, opts, eye, center, up) {
+function attachCamera(canvas, opts) {
   opts = opts || {}
   opts.pan = opts.pan !== false
   opts.scale = opts.scale !== false
   opts.rotate = opts.rotate !== false
+  opts.eye = opts.eye || [0, 10, 30]
+  opts.center = opts.center || [0, 0, 0]
+  opts.up = opts.up || [0, 1, 0]
 
   var scroll = createScroll(canvas, opts.scale)
   var mbut = mb(canvas, opts.rotate)
   var mpos = mp(canvas)
-  var camera = createCamera(
-      eye || [0, 10, 30]
-    , center || [0, 0, 0]
-    , up || [0, 1, 0]
-  )
+  var camera = createCamera(eye, center, up)
 
   camera.tick = tick
 
@@ -33,14 +32,14 @@ function attachCamera(canvas, opts, eye, center, up) {
     var height = canvas.height
     var width = canvas.width
 
-    if (opts.rotate && mbut.left && !ctrl && !alt) {
+    if (opts.rotate && mbut.right || (mbut.left && ctrl && !alt)) {
       camera.rotate(
           [ mpos.x / width - 0.5, mpos.y / height - 0.5 ]
         , [ mpos.prevX / width - 0.5, mpos.prevY / height - 0.5 ]
       )
     }
 
-    if (opts.pan && mbut.right || (mbut.left && ctrl && !alt)) {
+    if (opts.pan && mbut.left && !ctrl && !alt) {
       camera.pan([
           panSpeed * (mpos.x - mpos.prevX) / width
         , panSpeed * (mpos.y - mpos.prevY) / height
