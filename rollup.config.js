@@ -22,6 +22,6 @@ const config = (file, format, plugins) => ({
 });
 
 export default [
-  config('dist/canvas-camera-2d.umd.js', 'umd', [buble()]),
-  config('dist/canvas-camera-2d.umd.min.js', 'umd', [buble(), terser()]),
+  config('dist/canvas-camera-2d.js', 'umd', [buble()]),
+  config('dist/canvas-camera-2d.min.js', 'umd', [buble(), terser()]),
 ];
