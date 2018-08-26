@@ -1,4 +1,4 @@
-# canvas-orbit-camera [![experimental](http://badges.github.io/stability-badges/dist/experimental.svg)](http://github.com/badges/stability-badges)
+# Canvas Warpper for 2D Camera [![experimental](http://badges.github.io/stability-badges/dist/experimental.svg)](http://github.com/badges/stability-badges)
 
 An alternative wrapper for
 [orbit-camera](http://github.com/mikolalysenko/orbit-camera) that works
@@ -48,23 +48,23 @@ too.
 ## Example
 
 ``` javascript
-var canvas = document.body.appendChild(document.createElement('canvas'))
-var createCamera = require('canvas-orbit-camera')
-var raf = require('raf')
+const canvas = document.body.appendChild(document.createElement('canvas'));
+const createCamera = require('canvas-2d-camera');
+const raf = require('raf');
 
-var camera = createCamera(canvas)
+const camera = createCamera(canvas);
 
-update()
+update();
 function update() {
-  raf(update)
+  raf(update);
 
   // Returns your view matrix for you
-  var view = camera.view()
+  const view = camera.view();
 
-  camera.tick()
+  camera.tick();
 }
 ```
 
 ## License
 
-MIT. See [LICENSE.md](http://github.com/hughsk/canvas-orbit-camera/blob/master/LICENSE.md) for details.
+MIT. See [LICENSE.md](http://github.com/flekschas/canvas-2d-camera/blob/master/LICENSE.md) for details.

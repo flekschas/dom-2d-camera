@@ -1,34 +1,55 @@
 {
-  "name": "canvas-orbit-camera",
-  "version": "1.0.2",
-  "description": "An alternative wrapper for orbit-camera that works independently of game-shell.",
-  "main": "index.js",
-  "scripts": {},
+  "name": "canvas-2d-camera",
+  "version": "1.0.0",
+  "description": "A canvas wrapper 2D camera",
+  "main": "dis/canvas-2d-camera.umd.js",
+  "module": "src/index.js",
+  "scripts": {
+    "build": "webpack --mode production"
+  },
   "repository": {
     "type": "git",
-    "url": "git://github.com/hughsk/canvas-orbit-camera.git"
+    "url": "git://github.com/flekschas/canvas-2d-camera.git"
   },
-  "author": "Hugh Kennedy <hughskennedy@gmail.com> (http://hughsk.io/)",
+  "author": "Fritz Lekschas",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/hughsk/canvas-orbit-camera/issues"
+    "url": "https://github.com/flekschas/canvas-2d-camera/issues"
   },
-  "homepage": "https://github.com/hughsk/canvas-orbit-camera",
+  "homepage": "https://github.com/flekschas/canvas-2d-camera",
   "dependencies": {
-    "key-pressed": "0.0.1",
-    "mouse-position": "^1.0.0",
-    "mouse-pressed": "0.0.1",
-    "orbit-camera": "0.0.3",
-    "scroll-speed": "^1.0.0"
+    "2dcamera": "flekschas/2d-camera",
+    "key-pressed": "flekschas/key-pressed",
+    "mouse-position": "^2.1.0",
+    "mouse-pressed": "^1.0.0",
+    "scroll-speed": "flekschas/scroll-speed"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "agadoo": "^1.0.0",
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^8.2.6",
+    "babel-loader": "^7.1.5",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-stage-2": "^6.24.1",
+    "eslint": "^5.4.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-loader": "^2.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.1",
+    "eslint-plugin-react": "^7.11.1",
+    "uglifyjs-webpack-plugin": "^1.3.0",
+    "unminified-webpack-plugin": "^2.0.0",
+    "webpack": "^4.17.1",
+    "webpack-cli": "^3.1.0",
+    "webpack-dev-server": "^3.1.5"
+  },
   "keywords": [
     "canvas",
-    "orbit",
+    "2d",
     "camera",
-    "webgl",
-    "3d",
-    "arcball",
-    "rotation"
+    "webgl"
   ]
 }
