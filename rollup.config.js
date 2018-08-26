@@ -7,10 +7,18 @@ const config = (file, format, plugins) => ({
     name: 'canvasCamera2d',
     format,
     file,
-    globals: [],
+    globals: {
+      'camera-2d': 'createCamera2d',
+    },
   },
   plugins,
-  external: ['gl-matrix'],
+  external: [
+    'camera-2d',
+    'key-pressed',
+    'mouse-position',
+    'mouse-pressed',
+    'scroll-speed',
+  ],
 });
 
 export default [
