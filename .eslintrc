@@ -11,4 +11,7 @@
     "ecmaVersion": 6,
     "sourceType": "module",
   },
+  "rules": {
+    "comma-dangle": 1,
+  }
 }
