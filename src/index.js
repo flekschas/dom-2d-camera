@@ -1,55 +1,68 @@
-import Camera from '2d-camera';
-import Scroll from 'scroll-speed';
-import mp from 'mouse-position';
-import mb from 'mouse-pressed';
-import key from 'key-pressed';
+import createCamera from 'camera-2d';
+import createScroll from 'scroll-speed';
+import createMousePosition from 'mouse-position';
+import createMousePressed from 'mouse-pressed';
+import createKeyPressed from 'key-pressed';
 
-const attachCamera = (
+const canvas2dCamera = (
   canvas,
   {
-    pan = false,
+    pan = true,
     panSpeed = 1,
-    scale = false,
+    scale = true,
     target = [],
     distance = 1,
-  } = {},
+  } = {}  // eslint-disable-line
 ) => {
-  const scroll = Scroll(canvas, scale);
-  const mbut = mb(canvas);
-  const mpos = mp(canvas);
-  const camera = Camera(target, distance);
+  let scroll = createScroll(canvas, scale);
+  let mousePressed = createMousePressed(canvas);
+  let mousePosition = createMousePosition(canvas);
+  let camera = createCamera(target, distance);
+  let isChanged = false;
 
   const tick = () => {
-    const alt = key('<alt>');
+    const alt = createKeyPressed('<alt>');
     const height = canvas.height / window.devicePixelRatio;
     const width = canvas.width / window.devicePixelRatio;
+    isChanged = false;
 
-    if (pan && mbut.left && !alt) {
+    if (pan && mousePressed.left && !alt) {
       // To pan 1:1 we need to half the width and height because the uniform
       // coordinate system goes from -1 to 1.
       camera.pan([
-        panSpeed * (mpos.x - mpos.prevX) / width * 2,
-        panSpeed * (mpos.y - mpos.prevY) / height * 2,
+        panSpeed * (mousePosition[0] - mousePosition.prev[0]) / width * 2,
+        panSpeed * (mousePosition[1] - mousePosition.prev[1]) / height * 2,
       ]);
+      isChanged = true;
     }
 
     if (scale && scroll[1]) {
       camera.distance *= Math.exp(scroll[1] / height);
+      isChanged = true;
     }
 
-    if (scale && (mbut.middle || (mbut.left && alt))) {
-      const d = mpos.y - mpos.prevY;
-      if (!d) return;
+    if (scale && (mousePressed.middle || (mousePressed.left && alt))) {
+      const d = mousePosition.y - mousePosition.prevY;
+      if (!d) return undefined;
 
       camera.distance *= Math.exp(d / height);
+      isChanged = true;
     }
 
     scroll.flush();
-    mpos.flush();
+    mousePosition.flush();
+
+    return isChanged;
   };
 
   const dispose = () => {
-    console.warn('Not implemented yet');
+    scroll.dispose();
+    mousePressed.dispose();
+    mousePosition.dispose();
+    camera = undefined;
+    scroll = undefined;
+    mousePressed = undefined;
+    mousePosition = undefined;
   };
 
   camera.tick = tick;
@@ -58,4 +71,4 @@ const attachCamera = (
   return camera;
 };
 
-export default attachCamera;
+export default canvas2dCamera;

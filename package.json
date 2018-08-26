@@ -22,14 +22,14 @@
     "watch": "rollup -cw"
   },
   "dependencies": {
-    "2dcamera": "flekschas/camera-2d",
+    "camera-2d": "flekschas/camera-2d",
     "key-pressed": "flekschas/key-pressed",
     "mouse-position": "^2.1.0",
     "mouse-pressed": "^1.0.0",
     "scroll-speed": "flekschas/scroll-speed"
   },
   "peerDependencies": {
-    "2dcamera": "flekschas/camera-2d",
+    "camera-2d": "flekschas/camera-2d",
     "key-pressed": "flekschas/key-pressed",
     "mouse-position": "^2.1.0",
     "mouse-pressed": "^1.0.0",
