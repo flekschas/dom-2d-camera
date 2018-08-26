@@ -10,8 +10,13 @@
     "webgl"
   ],
   "license": "MIT",
-  "main": "dis/canvas-camera-2d.js",
+  "main": "dist/canvas-camera-2d.js",
   "module": "src/index.js",
+  "files": [
+    "src/index.js",
+    "dist/canvas-camera-2d.js",
+    "dist/canvas-camera-2d.min.js"
+  ],
   "scripts": {
     "build": "rollup -c",
     "lint": "eslint src/index.js rollup.config.js",
