@@ -1,55 +1,57 @@
 {
-  "name": "canvas-2d-camera",
-  "version": "1.0.0",
-  "description": "A canvas wrapper 2D camera",
-  "main": "dis/canvas-2d-camera.umd.js",
+  "name": "canvas-camera-2d",
+  "version": "0.1.0",
+  "description": "A canvas wrapper for a 2D camera",
+  "author": "Fritz Lekschas",
+  "keywords": [
+    "canvas",
+    "2d",
+    "camera",
+    "webgl"
+  ],
+  "license": "MIT",
+  "main": "dis/canvas-camera-2d.js",
   "module": "src/index.js",
   "scripts": {
-    "build": "webpack --mode production"
+    "build": "rollup -c",
+    "lint": "eslint src/index.js rollup.config.js",
+    "prepublishOnly": "npm run lint",
+    "prerelease": "rm -rf dist/*; npm run build; zip -r dist.zip dist",
+    "pretest": "npm run lint",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "rollup -cw"
   },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/flekschas/canvas-2d-camera.git"
-  },
-  "author": "Fritz Lekschas",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/flekschas/canvas-2d-camera/issues"
-  },
-  "homepage": "https://github.com/flekschas/canvas-2d-camera",
   "dependencies": {
-    "2dcamera": "flekschas/2d-camera",
+    "2dcamera": "flekschas/camera-2d",
+    "key-pressed": "flekschas/key-pressed",
+    "mouse-position": "^2.1.0",
+    "mouse-pressed": "^1.0.0",
+    "scroll-speed": "flekschas/scroll-speed"
+  },
+  "peerDependencies": {
+    "2dcamera": "flekschas/camera-2d",
     "key-pressed": "flekschas/key-pressed",
     "mouse-position": "^2.1.0",
     "mouse-pressed": "^1.0.0",
     "scroll-speed": "flekschas/scroll-speed"
   },
   "devDependencies": {
-    "agadoo": "^1.0.0",
-    "babel-core": "^6.26.3",
-    "babel-eslint": "^8.2.6",
-    "babel-loader": "^7.1.5",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-polyfill": "^6.26.0",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-stage-2": "^6.24.1",
     "eslint": "^5.4.0",
     "eslint-config-airbnb": "^17.1.0",
-    "eslint-loader": "^2.1.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.1",
     "eslint-plugin-react": "^7.11.1",
-    "uglifyjs-webpack-plugin": "^1.3.0",
-    "unminified-webpack-plugin": "^2.0.0",
-    "webpack": "^4.17.1",
-    "webpack-cli": "^3.1.0",
-    "webpack-dev-server": "^3.1.5"
+    "esm": "^3.0.74",
+    "rollup": "^0.64.1",
+    "rollup-plugin-buble": "^0.19.2",
+    "rollup-plugin-terser": "^1.0.1"
   },
-  "keywords": [
-    "canvas",
-    "2d",
-    "camera",
-    "webgl"
-  ]
+  "homepage": "https://github.com/flekschas/canvas-2d-camera",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/flekschas/canvas-2d-camera.git"
+  },
+  "bugs": {
+    "url": "https://github.com/flekschas/canvas-2d-camera/issues"
+  }
 }
