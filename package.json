@@ -23,11 +23,12 @@
     "prepublishOnly": "npm run lint",
     "prerelease": "rm -rf dist/*; npm run build; zip -r dist.zip dist",
     "pretest": "npm run lint",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "node tests/index.js | tap-spec",
     "watch": "rollup -cw"
   },
   "dependencies": {
     "camera-2d": "flekschas/camera-2d",
+    "gl-matrix": "^2.8.1",
     "key-pressed": "flekschas/key-pressed",
     "mouse-position": "^2.1.0",
     "mouse-pressed": "^1.0.0",
@@ -46,10 +47,11 @@
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.1",
     "eslint-plugin-react": "^7.11.1",
-    "esm": "^3.0.74",
     "rollup": "^0.64.1",
     "rollup-plugin-buble": "^0.19.2",
-    "rollup-plugin-terser": "^1.0.1"
+    "rollup-plugin-terser": "^1.0.1",
+    "tap-spec": "^5.0.0",
+    "tape": "^4.9.1"
   },
   "homepage": "https://github.com/flekschas/canvas-2d-camera",
   "repository": {

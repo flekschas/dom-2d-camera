@@ -9,11 +9,17 @@ const config = (file, format, plugins) => ({
     file,
     globals: {
       'camera-2d': 'createCamera2d',
+      'gl-matrix': 'glMatrix',
+      'key-pressed': 'createKeyPressed',
+      'mouse-position': 'createMousePosition',
+      'mouse-pressed': 'createMousePressed',
+      'scroll-speed': 'createScroll',
     },
   },
   plugins,
   external: [
     'camera-2d',
+    'gl-matrix',
     'key-pressed',
     'mouse-position',
     'mouse-pressed',
