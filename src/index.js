@@ -1,24 +1,39 @@
 import createCamera from 'camera-2d';
-import createScroll from 'scroll-speed';
+import { vec3 } from 'gl-matrix';
+import createKeyPressed from 'key-pressed';
 import createMousePosition from 'mouse-position';
 import createMousePressed from 'mouse-pressed';
-import createKeyPressed from 'key-pressed';
+import createScroll from 'scroll-speed';
 
 const canvas2dCamera = (
   canvas,
   {
-    pan = true,
-    panSpeed = 1,
-    scale = true,
-    target = [],
-    distance = 1,
-  } = {}
+    pan: initPan = true,
+    panSpeed: initPanSpeed = 1,
+    scale: initScale = true,
+    target: initTarget = [],
+    distance: initDistance = 1.0,
+  } = {},
 ) => {
+  let pan = initPan;
+  let panSpeed = initPanSpeed;
+  let scale = initScale;
   let scroll = createScroll(canvas, scale);
   let mousePressed = createMousePressed(canvas);
   let mousePosition = createMousePosition(canvas);
-  let camera = createCamera(target, distance);
+  let camera = createCamera({ initTarget, initDistance });
   let isChanged = false;
+
+  const getRelCoords = (x, y, w, h) => {
+    // Get relative webgl coordinates
+    const relX = -1 + (x / w * 2);
+    const relY = 1 + (y / h * -2);
+    // Homogeneous vector
+    const v = [relX, relY, 1];
+    // Translate vector
+    vec3.transformMat3(v, v, camera.transformation);
+    return v.slice(0, 2);
+  };
 
   const tick = () => {
     const alt = createKeyPressed('<alt>');
@@ -37,7 +52,33 @@ const canvas2dCamera = (
     }
 
     if (scale && scroll[1]) {
-      camera.distance *= Math.exp(scroll[1] / height);
+      // Target == viewport center
+      const { target, distance: oldDist } = camera;
+      const newDist = camera.distance * Math.exp(scroll[1] / height);
+
+      const dDist = newDist / oldDist;
+      const recipDDist = 1 - dDist;
+
+      // Get the relative WebGL coordinates of the mouse
+      const [relX, relY] = getRelCoords(
+        mousePosition[0],
+        mousePosition[1],
+        width,
+        height,
+      );
+
+      // X and Y distance between the center and the mouse
+      const dX = target[0] - relX;
+      const dY = target[1] - relY;
+
+      camera.lookAt(
+        [
+          target[0] - dX * recipDDist,
+          target[1] - dY * recipDDist,
+        ],
+        newDist,
+      );
+
       isChanged = true;
     }
 
@@ -66,6 +107,7 @@ const canvas2dCamera = (
   };
 
   camera.tick = tick;
+  camera.getRelCoords = getRelCoords;
   camera.dispose = dispose;
 
   return camera;
