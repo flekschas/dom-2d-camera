@@ -1,70 +1,80 @@
-# Canvas Warpper for 2D Camera [![experimental](http://badges.github.io/stability-badges/dist/experimental.svg)](http://github.com/badges/stability-badges)
+# Canvas Warpper for 2D Camera
 
-An alternative wrapper for
-[orbit-camera](http://github.com/mikolalysenko/orbit-camera) that works
-independently of [game-shell](http://github.com/mikolalysenko/game-shell).
+> A wrapper for [camera-2d](https://github.com/flekschas/camera-2d) that supports pan, zoom, and rotate.
 
 Controls are as follows:
 
-* Pan - Left click
+* Pan - Left click and hold + mouse move
 * Zoom - Scroll or Shift + Left click
 * Rotate - Right click or Control + Left click
 
 Based heavily on
-[game-shell-orbit-camera](http://github.com/mikolalysenko/game-shell-orbit-camera).
+[orbit-camera](http://github.com/mikolalysenko/orbit-camera).
 
-## Usage
+## API
 
-[![NPM](https://nodei.co/npm/canvas-orbit-camera.png)](https://nodei.co/npm/canvas-orbit-camera/)
+```javascript
+import canvasCamera2d from 'canvas-camera-2d';
+```
 
-### camera = createCamera(canvas[, options])
+### camera = canvasCamera2d(canvas[, options])
 
-Attaches a modified `orbit-camera` instance to the `canvas` – attaching the
-required event listeners for interaction.
+Attaches a modified `camera-2d-simple` instance to the `canvas`, i.e., attaching the required event listeners for interaction.
 
 The following options are available:
 
-* `rotate`: disable rotation interactions by passing `false`.
-* `scale`: disable scaling interactions by passing `false`.
-* `pan`: disable panning interactions by passing `false`.
-* `eye`: eye is the eye vector of the camera. defaults to `[0, 10, 30]`.
-* `center`: center is the target the camera is looking at `[0, 0, 0]`.
-* `up`: up is the up direction for the camera. defaults to `[0, 1, 0]`.
+* `distance`: initial distance of the camera. Defaults to `1.0`.
+* `target`: x, y position the camera is looking in GL coordinates. Defaults to`[0, 0]`.
+* `pan`: if `true` panning is enabled. Defaults to `true`.
+* `panSpeed`: initial panning speed. Defaults to `1`.
+* `pan`: if `true` panning is enabled. Defaults to `true`.
+* `panSpeed`: initial panning speed. Defaults to `1`.
+* `zoom`: if `true` zooming is enabled. Defaults to `true`.
+* `zoomSpeed`: initial zooming speed. Defaults to `1`.
 
-See the [orbit-camera documentation](https://github.com/mikolalysenko/orbit-camera#readme)
-for a full list of available methods.
+**Returns** a new 2d camera object.
+
+The [camera's API](https://github.com/flekschas/camera-2d#api) is augmented with the following additional endpoints:
 
 ### camera.tick()
 
-Call this at the beginning of each frame to update the current position of the
-camera.
+Call this at the beginning of each frame to update the current position of the camera.
 
-### camera.view([out])
+### camera.getGlPos(x, y, w, h)
 
-Returns the current view matrix associated by the camera: a 16-element (4x4)
-`Float32Array` instance. Optionally, you can pass in your own array `out` here
-too.
+Computes the WebGL position of `x` and `y` given the width `w` and height `h` of the canvas object.
 
-## Example
+* `x`: relative x position in pixel coordinates.
+* `y`: relative y position in pixel coordinates.
+* `w`: width of the canvas object.
+* `h`: height of the canvas object.
 
-``` javascript
-const canvas = document.body.appendChild(document.createElement('canvas'));
-const createCamera = require('canvas-2d-camera');
-const raf = require('raf');
+**Returns** `[relX, relY]` the WebGL position of `x` and `y`.
 
-const camera = createCamera(canvas);
+### camera.dispose()
 
-update();
-function update() {
-  raf(update);
+Unsubscribes all event listeners.
 
-  // Returns your view matrix for you
-  const view = camera.view();
+### camera.isPan
 
-  camera.tick();
-}
-```
+Get and set panning.
 
-## License
+### camera.panSpeed
 
-MIT. See [LICENSE.md](http://github.com/flekschas/canvas-2d-camera/blob/master/LICENSE.md) for details.
+Get and set pan speed.
+
+### camera.isRotate
+
+Get and set rotation.
+
+### camera.rotateSpeed
+
+Get and set rotation speed.
+
+### camera.isZoom
+
+Get and set zooming.
+
+### camera.zoomSpeed
+
+Get and set zoom speed.
