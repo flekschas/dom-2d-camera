@@ -27,7 +27,7 @@
     "watch": "rollup -cw"
   },
   "dependencies": {
-    "camera-2d": "flekschas/camera-2d",
+    "camera-2d-simple": "^1.0.0",
     "gl-matrix": "^2.8.1",
     "key-pressed": "flekschas/key-pressed",
     "mouse-position": "^2.1.0",
@@ -35,7 +35,7 @@
     "scroll-speed": "flekschas/scroll-speed"
   },
   "peerDependencies": {
-    "camera-2d": "flekschas/camera-2d",
+    "camera-2d-simple": "^1.0.0",
     "key-pressed": "flekschas/key-pressed",
     "mouse-position": "^2.1.0",
     "mouse-pressed": "^1.0.0",
@@ -53,12 +53,12 @@
     "tap-spec": "^5.0.0",
     "tape": "^4.9.1"
   },
-  "homepage": "https://github.com/flekschas/canvas-2d-camera",
+  "homepage": "https://github.com/flekschas/canvas-camera-2d",
   "repository": {
     "type": "git",
-    "url": "git://github.com/flekschas/canvas-2d-camera.git"
+    "url": "git://github.com/flekschas/canvas-camera-2d.git"
   },
   "bugs": {
-    "url": "https://github.com/flekschas/canvas-2d-camera/issues"
+    "url": "https://github.com/flekschas/canvas-camera-2d/issues"
   }
 }
