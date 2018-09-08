@@ -5,7 +5,7 @@
 Controls are as follows:
 
 * Pan - Left click and hold + mouse move
-* Zoom - Scroll or Shift + Left click
+* Zoom - Scroll or Alt + Left click and hold with vertical mouse move
 * Rotate - Right click or Control + Left click
 
 Based heavily on

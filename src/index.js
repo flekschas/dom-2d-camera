@@ -90,7 +90,7 @@ const canvas2dCamera = (
     }
 
     if (zoom && (mousePressed.middle || (mousePressed.left && alt))) {
-      const d = mousePosition.y - mousePosition.prevY;
+      const d = mousePosition[1] - mousePosition.prev[1];
       if (!d) return undefined;
 
       camera.distance *= zoomSpeed * Math.exp(d / height);
