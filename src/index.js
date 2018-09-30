@@ -1,9 +1,9 @@
-import createCamera from 'camera-2d-simple';
-import { vec3 } from 'gl-matrix';
-import createKeyPressed from 'key-pressed';
-import createMousePosition from 'mouse-position';
-import createMousePressed from 'mouse-pressed';
-import createScroll from 'scroll-speed';
+import createCamera from "camera-2d-simple";
+import { vec3 } from "gl-matrix";
+import createKeyPressed from "key-pressed";
+import createMousePosition from "mouse-position";
+import createMousePressed from "mouse-pressed";
+import createScroll from "scroll-speed";
 
 const canvas2dCamera = (
   canvas,
@@ -16,8 +16,8 @@ const canvas2dCamera = (
     rotateSpeed: initRotateSpeed = 1,
     target: initTarget = [],
     zoom: initZoom = true,
-    zoomSpeed: initZoomSpeed = 1,
-  } = {},
+    zoomSpeed: initZoomSpeed = 1
+  } = {}
 ) => {
   let fixed = initFixed;
   let pan = initPan;
@@ -35,8 +35,8 @@ const canvas2dCamera = (
 
   const getGlPos = (x, y, w, h) => {
     // Get relative WebGL position
-    const relX = -1 + (x / w * 2);
-    const relY = 1 + (y / h * -2);
+    const relX = -1 + (x / w) * 2;
+    const relY = 1 + (y / h) * -2;
     // Homogeneous vector
     const v = [relX, relY, 1];
     // Translate vector
@@ -47,7 +47,7 @@ const canvas2dCamera = (
   const tick = () => {
     if (fixed) return undefined;
 
-    const alt = createKeyPressed('<alt>');
+    const alt = createKeyPressed("<alt>");
     const height = canvas.height / window.devicePixelRatio;
     const width = canvas.width / window.devicePixelRatio;
     isChanged = false;
@@ -56,8 +56,8 @@ const canvas2dCamera = (
       // To pan 1:1 we need to half the width and height because the uniform
       // coordinate system goes from -1 to 1.
       camera.pan([
-        panSpeed * (mousePosition[0] - mousePosition.prev[0]) / width * 2,
-        panSpeed * (mousePosition[1] - mousePosition.prev[1]) / height * 2,
+        ((panSpeed * (mousePosition[0] - mousePosition.prev[0])) / width) * 2,
+        ((panSpeed * (mousePosition[1] - mousePosition.prev[1])) / height) * 2
       ]);
       isChanged = true;
     }
@@ -65,7 +65,8 @@ const canvas2dCamera = (
     if (zoom && scroll[1]) {
       // Target == viewport center
       const { target, distance: oldDist } = camera;
-      const newDist = zoomSpeed * camera.distance * Math.exp(scroll[1] / height);
+      const newDist =
+        zoomSpeed * camera.distance * Math.exp(scroll[1] / height);
 
       const dDist = newDist / oldDist;
       const recipDDist = 1 - dDist;
@@ -75,7 +76,7 @@ const canvas2dCamera = (
         mousePosition[0],
         mousePosition[1],
         width,
-        height,
+        height
       );
 
       // X and Y distance between the center and the mouse
@@ -83,11 +84,8 @@ const canvas2dCamera = (
       const dY = target[1] - relY;
 
       camera.lookAt(
-        [
-          target[0] - dX * recipDDist,
-          target[1] - dY * recipDDist,
-        ],
-        newDist,
+        [target[0] - dX * recipDDist, target[1] - dY * recipDDist],
+        newDist
       );
 
       isChanged = true;
@@ -121,33 +119,47 @@ const canvas2dCamera = (
   camera.getGlPos = getGlPos;
   camera.dispose = dispose;
 
-  Object.defineProperty(camera, 'isFixed', {
+  Object.defineProperty(camera, "isFixed", {
     get: () => fixed,
-    set: (newFixed) => { fixed = !!newFixed; },
+    set: newFixed => {
+      fixed = !!newFixed;
+    }
   });
-  Object.defineProperty(camera, 'isPan', {
+  Object.defineProperty(camera, "isPan", {
     get: () => pan,
-    set: (newPan) => { pan = !!newPan; },
+    set: newPan => {
+      pan = !!newPan;
+    }
   });
-  Object.defineProperty(camera, 'panSpeed', {
+  Object.defineProperty(camera, "panSpeed", {
     get: () => panSpeed,
-    set: (newPanSpeed) => { panSpeed = +newPanSpeed > 0 ? +newPanSpeed : panSpeed; },
+    set: newPanSpeed => {
+      panSpeed = +newPanSpeed > 0 ? +newPanSpeed : panSpeed;
+    }
   });
-  Object.defineProperty(camera, 'isRotate', {
+  Object.defineProperty(camera, "isRotate", {
     get: () => rotate,
-    set: (newRotate) => { rotate = !!newRotate; },
+    set: newRotate => {
+      rotate = !!newRotate;
+    }
   });
-  Object.defineProperty(camera, 'rotateSpeed', {
+  Object.defineProperty(camera, "rotateSpeed", {
     get: () => rotateSpeed,
-    set: (newRotateSpeed) => { rotateSpeed = +newRotateSpeed > 0 ? +newRotateSpeed : rotateSpeed; },
+    set: newRotateSpeed => {
+      rotateSpeed = +newRotateSpeed > 0 ? +newRotateSpeed : rotateSpeed;
+    }
   });
-  Object.defineProperty(camera, 'isZoom', {
+  Object.defineProperty(camera, "isZoom", {
     get: () => zoom,
-    set: (newZoom) => { zoom = !!newZoom; },
+    set: newZoom => {
+      zoom = !!newZoom;
+    }
   });
-  Object.defineProperty(camera, 'zoomSpeed', {
+  Object.defineProperty(camera, "zoomSpeed", {
     get: () => zoomSpeed,
-    set: (newZoomSpeed) => { zoomSpeed = +newZoomSpeed > 0 ? +newZoomSpeed : zoomSpeed; },
+    set: newZoomSpeed => {
+      zoomSpeed = +newZoomSpeed > 0 ? +newZoomSpeed : zoomSpeed;
+    }
   });
 
   return camera;

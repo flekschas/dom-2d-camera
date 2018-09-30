@@ -20,6 +20,7 @@
   "scripts": {
     "build": "rollup -c",
     "lint": "eslint src/index.js rollup.config.js",
+    "precommit": "pretty-quick --staged",
     "prepublishOnly": "npm run lint",
     "prerelease": "rm -rf dist/*; npm run build; zip -r dist.zip dist",
     "pretest": "npm run lint",
@@ -42,10 +43,10 @@
   },
   "devDependencies": {
     "eslint": "^5.4.0",
-    "eslint-config-airbnb": "^17.1.0",
-    "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-jsx-a11y": "^6.1.1",
-    "eslint-plugin-react": "^7.11.1",
+    "eslint-config-prettier": "^v3.1.0",
+    "husky": "^1.0.0-rc.15",
+    "prettier": "1.14.3",
+    "pretty-quick": "^1.7.0",
     "rollup": "^0.64.1",
     "rollup-plugin-buble": "^0.19.2",
     "rollup-plugin-terser": "^1.0.1"
