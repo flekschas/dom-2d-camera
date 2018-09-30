@@ -31,14 +31,16 @@ Attaches a modified `camera-2d-simple` instance to the `canvas`, i.e., attaching
 
 The following options are available:
 
-- `distance`: initial distance of the camera. Defaults to `1.0`.
-- `target`: x, y position the camera is looking in GL coordinates. Defaults to`[0, 0]`.
-- `pan`: if `true` panning is enabled. Defaults to `true`.
-- `panSpeed`: initial panning speed. Defaults to `1`.
-- `pan`: if `true` panning is enabled. Defaults to `true`.
-- `panSpeed`: initial panning speed. Defaults to `1`.
-- `zoom`: if `true` zooming is enabled. Defaults to `true`.
-- `zoomSpeed`: initial zooming speed. Defaults to `1`.
+- `distance`: initial distance of the camera. [dtype: float, default: `1.0`]
+- `target`: x, y position the camera is looking in GL coordinates. [dtype: array of floats, default: `[0.0, 0.0]`]
+- `rotation`: rotation in radians around the z axis. [dtype: float, default: `0.0`]
+- `isFixed`: if `true` panning, rotating, and zooming is disabled. [dtype: bool, default: `false`]
+- `isPan`: if `true` panning is enabled. [dtype: bool, default: `true`]
+- `panSpeed`: initial panning speed. [dtype: float, default: `1.0`]
+- `isRotate`: if `true` rotation is enabled. [dtype: bool, default: `true`]
+- `rotateSpeed`: initial panning speed. [dtype: float, default: `1.0`]
+- `isZoom`: if `true` zooming is enabled. [dtype: bool, default: `true`]
+- `zoomSpeed`: initial zooming speed. [dtype: float, default: `1.0`]
 
 **Returns** a new 2d camera object.
 
@@ -63,14 +65,14 @@ Computes the WebGL position of `x` and `y` given the width `w` and height `h` of
 
 Unsubscribes all event listeners.
 
-### camera.config(settings)
+### camera.config(options)
 
-Configure the canvas camera. `settings` accepts the following settings:
+Configure the canvas camera. `options` accepts the following options:
 
 - `isFixed`: if `true` panning, rotating, and zooming is disabled. [default: `false`]
 - `isPan`: if `true` panning is enabled. [dtype: bool, default: `true`]
-- `isRotate`: if `true` rotation is enabled. [dtype: bool, default: `true`]
-- `isZoom`: if `true` zooming is enabled. [dtype: bool, default: `true`]
 - `panSpeed`: panning speed. [dtype: float, default: `1.0`]
+- `isRotate`: if `true` rotation is enabled. [dtype: bool, default: `true`]
 - `rotateSpeed`: rotation speed. [dtype: float, default: `1.0`]
+- `isZoom`: if `true` zooming is enabled. [dtype: bool, default: `true`]
 - `zoomSpeed`: zooming speed. [dtype: float, default: `1.0`]
