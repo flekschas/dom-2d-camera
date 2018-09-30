@@ -8,8 +8,7 @@ Controls are as follows:
 * Zoom - Scroll or Alt + Left click and hold with vertical mouse move
 * Rotate - Right click or Control + Left click
 
-Based heavily on
-[orbit-camera](http://github.com/mikolalysenko/orbit-camera).
+Based heavily on [orbit-camera](http://github.com/mikolalysenko/orbit-camera).
 
 ## API
 
@@ -54,6 +53,10 @@ Computes the WebGL position of `x` and `y` given the width `w` and height `h` of
 ### camera.dispose()
 
 Unsubscribes all event listeners.
+
+### camera.isFixed
+
+Get and set fixing.
 
 ### camera.isPan
 

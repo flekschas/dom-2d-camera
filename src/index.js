@@ -9,6 +9,7 @@ const canvas2dCamera = (
   canvas,
   {
     distance: initDistance = 1.0,
+    fixed: initFixed = false,
     pan: initPan = true,
     panSpeed: initPanSpeed = 1,
     rotate: initRotate = true,
@@ -18,6 +19,7 @@ const canvas2dCamera = (
     zoomSpeed: initZoomSpeed = 1,
   } = {},
 ) => {
+  let fixed = initFixed;
   let pan = initPan;
   let panSpeed = initPanSpeed;
   let rotate = initRotate;
@@ -43,6 +45,8 @@ const canvas2dCamera = (
   };
 
   const tick = () => {
+    if (fixed) return undefined;
+
     const alt = createKeyPressed('<alt>');
     const height = canvas.height / window.devicePixelRatio;
     const width = canvas.width / window.devicePixelRatio;
@@ -117,6 +121,10 @@ const canvas2dCamera = (
   camera.getGlPos = getGlPos;
   camera.dispose = dispose;
 
+  Object.defineProperty(camera, 'isFixed', {
+    get: () => fixed,
+    set: (newFixed) => { fixed = !!newFixed; },
+  });
   Object.defineProperty(camera, 'isPan', {
     get: () => pan,
     set: (newPan) => { pan = !!newPan; },
