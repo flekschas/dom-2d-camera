@@ -8,30 +8,22 @@ import createScroll from "scroll-speed";
 const canvas2dCamera = (
   canvas,
   {
-    distance: initDistance = 1.0,
-    fixed: initFixed = false,
-    pan: initPan = true,
-    panSpeed: initPanSpeed = 1,
-    rotate: initRotate = true,
-    rotateSpeed: initRotateSpeed = 1,
-    target: initTarget = [],
-    zoom: initZoom = true,
-    zoomSpeed: initZoomSpeed = 1
+    distance = 1.0,
+    target = [],
+    isFixed = false,
+    isPan = true,
+    panSpeed = 1,
+    isRotate = true,
+    rotateSpeed = 1,
+    isZoom = true,
+    zoomSpeed = 1
   } = {}
 ) => {
-  let fixed = initFixed;
-  let pan = initPan;
-  let panSpeed = initPanSpeed;
-  let rotate = initRotate;
-  let rotateSpeed = initRotateSpeed;
-  let zoom = initZoom;
-  let zoomSpeed = initZoomSpeed;
-
-  let camera = createCamera({ initTarget, initDistance });
+  let camera = createCamera({ target, distance });
   let isChanged = false;
   let mousePosition = createMousePosition(canvas);
   let mousePressed = createMousePressed(canvas);
-  let scroll = createScroll(canvas, zoom);
+  let scroll = createScroll(canvas, isZoom);
 
   const getGlPos = (x, y, w, h) => {
     // Get relative WebGL position
@@ -45,14 +37,14 @@ const canvas2dCamera = (
   };
 
   const tick = () => {
-    if (fixed) return undefined;
+    if (isFixed) return undefined;
 
     const alt = createKeyPressed("<alt>");
     const height = canvas.height / window.devicePixelRatio;
     const width = canvas.width / window.devicePixelRatio;
     isChanged = false;
 
-    if (pan && mousePressed.left && !alt) {
+    if (isPan && mousePressed.left && !alt) {
       // To pan 1:1 we need to half the width and height because the uniform
       // coordinate system goes from -1 to 1.
       camera.pan([
@@ -62,7 +54,7 @@ const canvas2dCamera = (
       isChanged = true;
     }
 
-    if (zoom && scroll[1]) {
+    if (isZoom && scroll[1]) {
       // Target == viewport center
       const { target, distance: oldDist } = camera;
       const newDist =
@@ -91,7 +83,7 @@ const canvas2dCamera = (
       isChanged = true;
     }
 
-    if (zoom && (mousePressed.middle || (mousePressed.left && alt))) {
+    if (isZoom && (mousePressed.middle || (mousePressed.left && alt))) {
       const d = mousePosition[1] - mousePosition.prev[1];
       if (!d) return undefined;
 
@@ -115,52 +107,42 @@ const canvas2dCamera = (
     mousePosition = undefined;
   };
 
-  camera.tick = tick;
-  camera.getGlPos = getGlPos;
-  camera.dispose = dispose;
+  const config = ({
+    isFixed: newIsFixed,
+    isPan: newIsPan,
+    panSpeed: newPanSpeed,
+    isRotate: newIsRotate,
+    rotateSpeed: newRotateSpeed,
+    isZoom: newIsZoom,
+    zoomSpeed: newZoomSpeed
+  } = {}) => {
+    if (typeof newIsFixed !== "undefined") {
+      isFixed = newIsFixed;
+    }
+    if (typeof newIsPan !== "undefined") {
+      isPan = newIsFixed;
+    }
+    if (typeof newPanSpeed !== "undefined" && +newPanSpeed > 0) {
+      panSpeed = newPanSpeed;
+    }
+    if (typeof newIsRotate !== "undefined") {
+      isRotate = newIsRotate;
+    }
+    if (typeof newRotateSpeed !== "undefined" && +newRotateSpeed > 0) {
+      rotateSpeed = newRotateSpeed;
+    }
+    if (typeof newIsZoom !== "undefined") {
+      isZoom = newIsZoom;
+    }
+    if (typeof newZoomSpeed !== "undefined" && +newZoomSpeed > 0) {
+      zoomSpeed = newZoomSpeed;
+    }
+  };
 
-  Object.defineProperty(camera, "isFixed", {
-    get: () => fixed,
-    set: newFixed => {
-      fixed = !!newFixed;
-    }
-  });
-  Object.defineProperty(camera, "isPan", {
-    get: () => pan,
-    set: newPan => {
-      pan = !!newPan;
-    }
-  });
-  Object.defineProperty(camera, "panSpeed", {
-    get: () => panSpeed,
-    set: newPanSpeed => {
-      panSpeed = +newPanSpeed > 0 ? +newPanSpeed : panSpeed;
-    }
-  });
-  Object.defineProperty(camera, "isRotate", {
-    get: () => rotate,
-    set: newRotate => {
-      rotate = !!newRotate;
-    }
-  });
-  Object.defineProperty(camera, "rotateSpeed", {
-    get: () => rotateSpeed,
-    set: newRotateSpeed => {
-      rotateSpeed = +newRotateSpeed > 0 ? +newRotateSpeed : rotateSpeed;
-    }
-  });
-  Object.defineProperty(camera, "isZoom", {
-    get: () => zoom,
-    set: newZoom => {
-      zoom = !!newZoom;
-    }
-  });
-  Object.defineProperty(camera, "zoomSpeed", {
-    get: () => zoomSpeed,
-    set: newZoomSpeed => {
-      zoomSpeed = +newZoomSpeed > 0 ? +newZoomSpeed : zoomSpeed;
-    }
-  });
+  camera.config = config;
+  camera.dispose = dispose;
+  camera.getGlPos = getGlPos;
+  camera.tick = tick;
 
   return camera;
 };

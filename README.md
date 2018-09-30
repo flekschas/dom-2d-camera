@@ -63,30 +63,14 @@ Computes the WebGL position of `x` and `y` given the width `w` and height `h` of
 
 Unsubscribes all event listeners.
 
-### camera.isFixed
+### camera.config(settings)
 
-Get and set fixing.
+Configure the canvas camera. `settings` accepts the following settings:
 
-### camera.isPan
-
-Get and set panning.
-
-### camera.panSpeed
-
-Get and set pan speed.
-
-### camera.isRotate
-
-Get and set rotation.
-
-### camera.rotateSpeed
-
-Get and set rotation speed.
-
-### camera.isZoom
-
-Get and set zooming.
-
-### camera.zoomSpeed
-
-Get and set zoom speed.
+- `isFixed`: if `true` panning, rotating, and zooming is disabled. [default: `false`]
+- `isPan`: if `true` panning is enabled. [dtype: bool, default: `true`]
+- `isRotate`: if `true` rotation is enabled. [dtype: bool, default: `true`]
+- `isZoom`: if `true` zooming is enabled. [dtype: bool, default: `true`]
+- `panSpeed`: panning speed. [dtype: float, default: `1.0`]
+- `rotateSpeed`: rotation speed. [dtype: float, default: `1.0`]
+- `zoomSpeed`: zooming speed. [dtype: float, default: `1.0`]

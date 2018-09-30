@@ -1,3 +1,8 @@
+**v0.3.0**
+
+- **[Breaking change]** the camera must now be configured using `camera.config({ ... })`.
+- Change to prettier code style.
+
 **v0.2.0**
 
 - Allow fixing the camera position when `camera.isFixed === true`.
