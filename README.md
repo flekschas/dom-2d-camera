@@ -3,7 +3,9 @@
 [![npm version](https://img.shields.io/npm/v/canvas-camera-2d.svg)](https://www.npmjs.com/package/canvas-camera-2d)
 [![node stability](https://img.shields.io/badge/stability-experimental-EC5314.svg)](https://nodejs.org/api/documentation.html#documentation_stability_index)
 [![build status](https://travis-ci.org/flekschas/canvas-camera-2d.svg?branch=master)](https://travis-ci.org/flekschas/canvas-camera-2d)
+[![gzipped size](https://img.shields.io/badge/gzipped%20size-1.2%20KB-6ae3c7.svg)](https://unpkg.com/canvas-camera-2d)
 [![code style prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
+[![demo](https://img.shields.io/badge/demo-online-6ae3c7.svg)](https://flekschas.github.io/regl-scatterplot/)
 
 > A wrapper for [camera-2d](https://github.com/flekschas/camera-2d) that supports pan, zoom, and rotate.
 
