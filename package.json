@@ -12,6 +12,8 @@
   "license": "MIT",
   "main": "dist/canvas-camera-2d.js",
   "module": "src/index.js",
+  "unpkg": "dist/canvas-camera-2d.min.js",
+  "jsdelivr": "dist/canvas-camera-2d.min.js",
   "files": [
     "src/index.js",
     "dist/canvas-camera-2d.js",
@@ -19,7 +21,7 @@
   ],
   "scripts": {
     "build": "rollup -c",
-    "lint": "eslint src/index.js rollup.config.js",
+    "lint": "eslint src rollup.config.js",
     "precommit": "pretty-quick --staged",
     "prepublishOnly": "npm run lint",
     "prerelease": "rm -rf dist/*; npm run build; zip -r dist.zip dist",
@@ -27,7 +29,7 @@
     "watch": "rollup -cw"
   },
   "dependencies": {
-    "camera-2d-simple": "^1.0.0",
+    "camera-2d-simple": "^1.2.0",
     "gl-matrix": "^2.8.1",
     "key-pressed": "flekschas/key-pressed",
     "mouse-position": "^2.1.0",
@@ -35,21 +37,21 @@
     "scroll-speed": "flekschas/scroll-speed"
   },
   "peerDependencies": {
-    "camera-2d-simple": "^1.0.0",
+    "camera-2d-simple": "^1.2.0",
     "key-pressed": "flekschas/key-pressed",
     "mouse-position": "^2.1.0",
     "mouse-pressed": "^1.0.0",
     "scroll-speed": "flekschas/scroll-speed"
   },
   "devDependencies": {
-    "eslint": "^5.4.0",
+    "eslint": "^5.7.0",
     "eslint-config-prettier": "^v3.1.0",
-    "husky": "^1.0.0-rc.15",
+    "husky": "^1.1.2",
     "prettier": "1.14.3",
-    "pretty-quick": "^1.7.0",
-    "rollup": "^0.64.1",
-    "rollup-plugin-buble": "^0.19.2",
-    "rollup-plugin-terser": "^1.0.1"
+    "pretty-quick": "^1.8.0",
+    "rollup": "^0.66.6",
+    "rollup-plugin-buble": "^0.19.4",
+    "rollup-plugin-terser": "^3.0.0"
   },
   "homepage": "https://github.com/flekschas/canvas-camera-2d",
   "repository": {
