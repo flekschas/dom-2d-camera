@@ -1,5 +1,5 @@
 import createCamera from "camera-2d-simple";
-import { vec3 } from "gl-matrix";
+import { vec2, vec3 } from "gl-matrix";
 import createKeyPressed from "key-pressed";
 import createMousePosition from "mouse-position";
 import createMousePressed from "mouse-pressed";
@@ -57,11 +57,10 @@ const canvas2dCamera = (
     if (isZoom && scroll[1]) {
       // Target == viewport center
       const { target, distance: oldDist } = camera;
-      const newDist =
-        zoomSpeed * camera.distance * Math.exp(scroll[1] / height);
+      const dZ = zoomSpeed * Math.exp(scroll[1] / height);
+      const newDist = oldDist * dZ;
 
-      const dDist = newDist / oldDist;
-      const recipDDist = 1 - dDist;
+      const recipDDist = 1 - newDist / oldDist;
 
       // Get the relative WebGL coordinates of the mouse
       const [relX, relY] = getGlPos(
@@ -75,19 +74,27 @@ const canvas2dCamera = (
       const dX = target[0] - relX;
       const dY = target[1] - relY;
 
-      camera.lookAt(
-        [target[0] - dX * recipDDist, target[1] - dY * recipDDist],
-        newDist
-      );
+      camera.pan([dX * recipDDist, -dY * recipDDist]);
+      camera.zoom(dZ);
 
       isChanged = true;
     }
 
-    if (isZoom && (mousePressed.middle || (mousePressed.left && alt))) {
-      const d = mousePosition[1] - mousePosition.prev[1];
-      if (!d) return undefined;
+    if (isRotate && (mousePressed.left && alt)) {
+      const wh = width / 2;
+      const hh = height / 2;
+      const x1 = mousePosition.prev[0] - wh;
+      const y1 = hh - mousePosition.prev[1];
+      const x2 = mousePosition[0] - wh;
+      const y2 = hh - mousePosition[1];
+      // Angle between the start and end mouse position with respect to the
+      // viewport center
+      const radians = vec2.angle([x1, y1], [x2, y2]);
+      // Determine the orientation
+      const cross = x1 * y2 - x2 * y1;
 
-      camera.distance *= zoomSpeed * Math.exp(d / height);
+      camera.rotate(rotateSpeed * radians * Math.sign(cross));
+
       isChanged = true;
     }
 

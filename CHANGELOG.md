@@ -1,3 +1,8 @@
+**v0.4.0**
+
+- Add rotation by ALT + mouse dragging
+- Remove zoom by ALT + mouse dragging
+
 **v0.3.0**
 
 - **[Breaking change]** the camera must now be configured using `camera.config({ ... })`.
