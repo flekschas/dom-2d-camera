@@ -33,19 +33,6 @@ const canvas2dCamera = (
   let aspectRatio = width / height;
   let isAlt = false;
 
-  const getGlPos = (x, y, w, h) => {
-    // Get relative WebGL position
-    const relX = -1 + (x / w) * 2;
-    const relY = 1 + (y / h) * -2;
-    // Homogeneous vector
-    const v = [relX, relY, 1, 1];
-    // Compute inverse view matrix
-    const viewInv = mat4.invert(scratch, camera.view);
-    // Translate vector
-    vec4.transformMat4(v, v, viewInv);
-    return v.slice(0, 2);
-  };
-
   const tick = () => {
     if (isFixed) return false;
 
@@ -137,7 +124,6 @@ const canvas2dCamera = (
 
   camera.config = config;
   camera.dispose = dispose;
-  camera.getGlPos = getGlPos;
   camera.refresh = refresh;
   camera.tick = tick;
 

@@ -1,3 +1,7 @@
+**v0.5.2**
+
+- Remove `camera.getGlPos()` as the base application should handle this since it typically involves a projection + model transformation
+
 **v0.5.1**
 
 - Adjust mouse coordinates by aspect ration to support typical projection view model setups.

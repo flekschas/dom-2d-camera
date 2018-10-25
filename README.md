@@ -62,16 +62,7 @@ Call this at the beginning of each frame to update the current position of the c
 
 Call after the width and height of the related canvas object changed.
 
-_Note: the camera does not update the width and height unless you tell it to using this function!_
-
-#### `camera.getGlPos(x, y, w, h)`
-
-Computes the WebGL position of `x` and `y` given the width `w` and height `h` of the canvas object.
-
-- `x`: relative x position in pixel coordinates.
-- `y`: relative y position in pixel coordinates.
-- `w`: width of the canvas object.
-- `h`: height of the canvas object.
+_Note: the camera does **not** update the width and height unless you tell it to using this function!_
 
 **Returns** `[relX, relY]` the WebGL position of `x` and `y`.
 
