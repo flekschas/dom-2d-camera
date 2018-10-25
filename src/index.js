@@ -20,8 +20,6 @@ const canvas2dCamera = (
     zoomSpeed = 1
   } = {}
 ) => {
-  const scratch = new Float32Array(16);
-
   let camera = createCamera(target, distance, rotation);
   let isChanged = false;
   let mousePosition = createMousePosition(canvas);
