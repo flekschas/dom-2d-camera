@@ -1,3 +1,7 @@
+**v0.5.1**
+
+- Adjust mouse coordinates by aspect ration to support typical projection view model setups.
+
 **v0.5.0**
 
 - Update camera-2d-simple to `v2` and adjust code

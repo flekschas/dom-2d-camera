@@ -30,7 +30,7 @@ const canvas2dCamera = (
 
   let height = canvas.height / window.devicePixelRatio;
   let width = canvas.width / window.devicePixelRatio;
-
+  let aspectRatio = width / height;
   let isAlt = false;
 
   const getGlPos = (x, y, w, h) => {
@@ -52,12 +52,15 @@ const canvas2dCamera = (
     isAlt = isKeyPressed("<alt>");
     isChanged = false;
 
+    const { 0: x, 1: y } = mousePosition;
+    const { 0: pX, 1: pY } = mousePosition.prev;
+
     if (isPan && mousePressed.left && !isAlt) {
       // To pan 1:1 we need to half the width and height because the uniform
       // coordinate system goes from -1 to 1.
       camera.pan([
-        ((panSpeed * (mousePosition[0] - mousePosition.prev[0])) / width) * 2,
-        ((panSpeed * (mousePosition.prev[1] - mousePosition[1])) / height) * 2
+        ((panSpeed * (x - pX)) / width) * 2 * Math.max(aspectRatio, 1),
+        (((panSpeed * (pY - y)) / height) * 2) / Math.min(aspectRatio, 1)
       ]);
       isChanged = true;
     }
@@ -66,8 +69,8 @@ const canvas2dCamera = (
       const dZ = zoomSpeed * Math.exp(scroll[1] / height);
 
       // Get normalized device coordinates (NDC)
-      const xNdc = -1 + (mousePosition[0] / width) * 2;
-      const yNdc = 1 + (mousePosition[1] / height) * -2;
+      const xNdc = (-1 + (x / width) * 2) * Math.max(aspectRatio, 1);
+      const yNdc = (1 - (y / height) * 2) / Math.min(aspectRatio, 1);
 
       camera.scale(1 / dZ, [xNdc, yNdc]);
 
@@ -77,10 +80,10 @@ const canvas2dCamera = (
     if (isRotate && (mousePressed.left && isAlt)) {
       const wh = width / 2;
       const hh = height / 2;
-      const x1 = mousePosition.prev[0] - wh;
-      const y1 = hh - mousePosition.prev[1];
-      const x2 = mousePosition[0] - wh;
-      const y2 = hh - mousePosition[1];
+      const x1 = pX - wh;
+      const y1 = hh - pY;
+      const x2 = x - wh;
+      const y2 = hh - y;
       // Angle between the start and end mouse position with respect to the
       // viewport center
       const radians = vec2.angle([x1, y1], [x2, y2]);
@@ -129,6 +132,7 @@ const canvas2dCamera = (
   const refresh = () => {
     height = canvas.height / window.devicePixelRatio;
     width = canvas.width / window.devicePixelRatio;
+    aspectRatio = width / height;
   };
 
   camera.config = config;
