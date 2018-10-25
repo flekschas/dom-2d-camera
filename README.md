@@ -15,7 +15,7 @@ Controls are as follows:
 - Zoom - Scroll or Alt + Left click and hold with vertical mouse move
 - Rotate - Right click or Control + Left click
 
-Based heavily on [orbit-camera](http://github.com/mikolalysenko/orbit-camera).
+Based on [orbit-camera](http://github.com/mikolalysenko/orbit-camera).
 
 Also see:
 
@@ -33,26 +33,32 @@ Attaches a modified `camera-2d-simple` instance to the `canvas`, i.e., attaching
 
 The following options are available:
 
-- `distance`: initial distance of the camera. [dtype: float, default: `1.0`]
-- `target`: x, y position the camera is looking in GL coordinates. [dtype: array of floats, default: `[0.0, 0.0]`]
-- `rotation`: rotation in radians around the z axis. [dtype: float, default: `0.0`]
+- `distance`: initial distance of the camera. [dtype: number, default: `1`]
+- `target`: x, y position the camera is looking in GL coordinates. [dtype: array of numbers, default: `[0,0]`]
+- `rotation`: rotation in radians around the z axis. [dtype: number, default: `0`]
 - `isFixed`: if `true` panning, rotating, and zooming is disabled. [dtype: bool, default: `false`]
 - `isPan`: if `true` panning is enabled. [dtype: bool, default: `true`]
-- `panSpeed`: initial panning speed. [dtype: float, default: `1.0`]
+- `panSpeed`: initial panning speed. [dtype: number, default: `1`]
 - `isRotate`: if `true` rotation is enabled. [dtype: bool, default: `true`]
-- `rotateSpeed`: initial panning speed. [dtype: float, default: `1.0`]
+- `rotateSpeed`: initial panning speed. [dtype: number, default: `1`]
 - `isZoom`: if `true` zooming is enabled. [dtype: bool, default: `true`]
-- `zoomSpeed`: initial zooming speed. [dtype: float, default: `1.0`]
+- `zoomSpeed`: initial zooming speed. [dtype: number, default: `1`]
 
-**Returns** a new 2d camera object.
+**Returns** a new 2D camera object.
 
 The [camera's API](https://github.com/flekschas/camera-2d#api) is augmented with the following additional endpoints:
 
-### camera.tick()
+#### `camera.tick()`
 
 Call this at the beginning of each frame to update the current position of the camera.
 
-### camera.getGlPos(x, y, w, h)
+#### `camera.refresh()`
+
+Call after the width and height of the related canvas object changed.
+
+_Note: the camera does not update the width and height unless you tell it to using this function!_
+
+#### `camera.getGlPos(x, y, w, h)`
 
 Computes the WebGL position of `x` and `y` given the width `w` and height `h` of the canvas object.
 
@@ -63,11 +69,11 @@ Computes the WebGL position of `x` and `y` given the width `w` and height `h` of
 
 **Returns** `[relX, relY]` the WebGL position of `x` and `y`.
 
-### camera.dispose()
+#### `camera.dispose()`
 
 Unsubscribes all event listeners.
 
-### camera.config(options)
+#### `camera.config(options)`
 
 Configure the canvas camera. `options` accepts the following options:
 
