@@ -21,6 +21,12 @@ Also see:
 
 - [regl-scatterplot](https://github.com/flekschas/regl-scatterplot) for an application and a [demo](https://flekschas.github.io/regl-scatterplot/).
 
+## Install
+
+```
+npm -i canvas-camera-2d
+```
+
 ## API
 
 ```javascript
