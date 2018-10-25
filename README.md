@@ -24,7 +24,7 @@ Also see:
 ## Install
 
 ```
-npm -i canvas-camera-2d
+npm i canvas-camera-2d
 ```
 
 ## API
