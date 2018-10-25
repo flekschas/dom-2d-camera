@@ -1,6 +1,6 @@
 import createCamera from "camera-2d-simple";
-import { vec2, vec3 } from "gl-matrix";
-import createKeyPressed from "key-pressed";
+import { vec2, vec4, mat4 } from "gl-matrix";
+import isKeyPressed from "key-pressed";
 import createMousePosition from "mouse-position";
 import createMousePressed from "mouse-pressed";
 import createScroll from "scroll-speed";
@@ -9,7 +9,8 @@ const canvas2dCamera = (
   canvas,
   {
     distance = 1.0,
-    target = [],
+    target = [0, 0],
+    rotation = 0,
     isFixed = false,
     isPan = true,
     panSpeed = 1,
@@ -19,68 +20,61 @@ const canvas2dCamera = (
     zoomSpeed = 1
   } = {}
 ) => {
-  let camera = createCamera({ target, distance });
+  const scratch = new Float32Array(16);
+
+  let camera = createCamera(target, distance, rotation);
   let isChanged = false;
   let mousePosition = createMousePosition(canvas);
   let mousePressed = createMousePressed(canvas);
   let scroll = createScroll(canvas, isZoom);
+
+  let height = canvas.height / window.devicePixelRatio;
+  let width = canvas.width / window.devicePixelRatio;
+
+  let isAlt = false;
 
   const getGlPos = (x, y, w, h) => {
     // Get relative WebGL position
     const relX = -1 + (x / w) * 2;
     const relY = 1 + (y / h) * -2;
     // Homogeneous vector
-    const v = [relX, relY, 1];
+    const v = [relX, relY, 1, 1];
+    // Compute inverse view matrix
+    const viewInv = mat4.invert(scratch, camera.view);
     // Translate vector
-    vec3.transformMat3(v, v, camera.transformation);
+    vec4.transformMat4(v, v, viewInv);
     return v.slice(0, 2);
   };
 
   const tick = () => {
-    if (isFixed) return undefined;
+    if (isFixed) return false;
 
-    const alt = createKeyPressed("<alt>");
-    const height = canvas.height / window.devicePixelRatio;
-    const width = canvas.width / window.devicePixelRatio;
+    isAlt = isKeyPressed("<alt>");
     isChanged = false;
 
-    if (isPan && mousePressed.left && !alt) {
+    if (isPan && mousePressed.left && !isAlt) {
       // To pan 1:1 we need to half the width and height because the uniform
       // coordinate system goes from -1 to 1.
       camera.pan([
         ((panSpeed * (mousePosition[0] - mousePosition.prev[0])) / width) * 2,
-        ((panSpeed * (mousePosition[1] - mousePosition.prev[1])) / height) * 2
+        ((panSpeed * (mousePosition.prev[1] - mousePosition[1])) / height) * 2
       ]);
       isChanged = true;
     }
 
     if (isZoom && scroll[1]) {
-      // Target == viewport center
-      const { target, distance: oldDist } = camera;
       const dZ = zoomSpeed * Math.exp(scroll[1] / height);
-      const newDist = oldDist * dZ;
 
-      const recipDDist = 1 - newDist / oldDist;
+      // Get normalized device coordinates (NDC)
+      const xNdc = -1 + (mousePosition[0] / width) * 2;
+      const yNdc = 1 + (mousePosition[1] / height) * -2;
 
-      // Get the relative WebGL coordinates of the mouse
-      const [relX, relY] = getGlPos(
-        mousePosition[0],
-        mousePosition[1],
-        width,
-        height
-      );
-
-      // X and Y distance between the center and the mouse
-      const dX = target[0] - relX;
-      const dY = target[1] - relY;
-
-      camera.pan([dX * recipDDist, -dY * recipDDist]);
-      camera.zoom(dZ);
+      camera.scale(1 / dZ, [xNdc, yNdc]);
 
       isChanged = true;
     }
 
-    if (isRotate && (mousePressed.left && alt)) {
+    if (isRotate && (mousePressed.left && isAlt)) {
       const wh = width / 2;
       const hh = height / 2;
       const x1 = mousePosition.prev[0] - wh;
@@ -117,38 +111,30 @@ const canvas2dCamera = (
   const config = ({
     isFixed: newIsFixed,
     isPan: newIsPan,
-    panSpeed: newPanSpeed,
     isRotate: newIsRotate,
-    rotateSpeed: newRotateSpeed,
     isZoom: newIsZoom,
+    panSpeed: newPanSpeed,
+    rotateSpeed: newRotateSpeed,
     zoomSpeed: newZoomSpeed
   } = {}) => {
-    if (typeof newIsFixed !== "undefined") {
-      isFixed = newIsFixed;
-    }
-    if (typeof newIsPan !== "undefined") {
-      isPan = newIsFixed;
-    }
-    if (typeof newPanSpeed !== "undefined" && +newPanSpeed > 0) {
-      panSpeed = newPanSpeed;
-    }
-    if (typeof newIsRotate !== "undefined") {
-      isRotate = newIsRotate;
-    }
-    if (typeof newRotateSpeed !== "undefined" && +newRotateSpeed > 0) {
-      rotateSpeed = newRotateSpeed;
-    }
-    if (typeof newIsZoom !== "undefined") {
-      isZoom = newIsZoom;
-    }
-    if (typeof newZoomSpeed !== "undefined" && +newZoomSpeed > 0) {
-      zoomSpeed = newZoomSpeed;
-    }
+    isFixed = newIsFixed || isFixed;
+    isPan = newIsPan || isPan;
+    isRotate = newIsRotate || isRotate;
+    isZoom = newIsZoom || isZoom;
+    panSpeed = +newPanSpeed > 0 ? newPanSpeed : panSpeed;
+    rotateSpeed = +newRotateSpeed > 0 ? newRotateSpeed : rotateSpeed;
+    zoomSpeed = +newZoomSpeed > 0 ? newZoomSpeed : zoomSpeed;
+  };
+
+  const refresh = () => {
+    height = canvas.height / window.devicePixelRatio;
+    width = canvas.width / window.devicePixelRatio;
   };
 
   camera.config = config;
   camera.dispose = dispose;
   camera.getGlPos = getGlPos;
+  camera.refresh = refresh;
   camera.tick = tick;
 
   return camera;
