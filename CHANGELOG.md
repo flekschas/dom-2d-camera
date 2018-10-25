@@ -1,3 +1,8 @@
+**v0.5.0**
+
+- Update camera-2d-simple to `v2` and adjust code
+- Allow setting the rotation on create
+
 **v0.4.0**
 
 - Add rotation by ALT + mouse dragging
