@@ -97,18 +97,18 @@ const canvas2dCamera = (
   };
 
   const config = ({
-    isFixed: newIsFixed,
-    isPan: newIsPan,
-    isRotate: newIsRotate,
-    isZoom: newIsZoom,
-    panSpeed: newPanSpeed,
-    rotateSpeed: newRotateSpeed,
-    zoomSpeed: newZoomSpeed
+    isFixed: newIsFixed = null,
+    isPan: newIsPan = null,
+    isRotate: newIsRotate = null,
+    isZoom: newIsZoom = null,
+    panSpeed: newPanSpeed = null,
+    rotateSpeed: newRotateSpeed = null,
+    zoomSpeed: newZoomSpeed = null
   } = {}) => {
-    isFixed = newIsFixed || isFixed;
-    isPan = newIsPan || isPan;
-    isRotate = newIsRotate || isRotate;
-    isZoom = newIsZoom || isZoom;
+    isFixed = newIsFixed !== null ? newIsFixed : isFixed;
+    isPan = newIsPan !== null ? newIsPan : isPan;
+    isRotate = newIsRotate !== null ? newIsRotate : isRotate;
+    isZoom = newIsZoom !== null ? newIsZoom : isZoom;
     panSpeed = +newPanSpeed > 0 ? newPanSpeed : panSpeed;
     rotateSpeed = +newRotateSpeed > 0 ? newRotateSpeed : rotateSpeed;
     zoomSpeed = +newZoomSpeed > 0 ? newZoomSpeed : zoomSpeed;
