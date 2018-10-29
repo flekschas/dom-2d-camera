@@ -44,8 +44,8 @@ const canvas2dCamera = (
       // To pan 1:1 we need to half the width and height because the uniform
       // coordinate system goes from -1 to 1.
       camera.pan([
-        ((panSpeed * (x - pX)) / width) * 2 * Math.max(aspectRatio, 1),
-        (((panSpeed * (pY - y)) / height) * 2) / Math.min(aspectRatio, 1)
+        ((panSpeed * (x - pX)) / width) * 2 * aspectRatio,
+        ((panSpeed * (pY - y)) / height) * 2
       ]);
       isChanged = true;
     }
@@ -54,8 +54,8 @@ const canvas2dCamera = (
       const dZ = zoomSpeed * Math.exp(scroll[1] / height);
 
       // Get normalized device coordinates (NDC)
-      const xNdc = (-1 + (x / width) * 2) * Math.max(aspectRatio, 1);
-      const yNdc = (1 - (y / height) * 2) / Math.min(aspectRatio, 1);
+      const xNdc = (-1 + (x / width) * 2) * aspectRatio;
+      const yNdc = 1 - (y / height) * 2;
 
       camera.scale(1 / dZ, [xNdc, yNdc]);
 
