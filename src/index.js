@@ -1,6 +1,6 @@
 import createCamera from "camera-2d-simple";
 import { vec2 } from "gl-matrix";
-import isKeyPressed from "key-pressed";
+import isKeyDown from "is-key-down";
 import createMousePosition from "mouse-position";
 import createMousePressed from "mouse-pressed";
 import createScroll from "scroll-speed";
@@ -34,7 +34,7 @@ const canvas2dCamera = (
   const tick = () => {
     if (isFixed) return false;
 
-    isAlt = isKeyPressed("<alt>");
+    isAlt = isKeyDown("Alt");
     isChanged = false;
 
     const { 0: x, 1: y } = mousePosition;

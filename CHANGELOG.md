@@ -1,3 +1,7 @@
+**v0.5.4**
+
+- Replace `key-pressed` with `is-key-down`
+
 **v0.5.3**
 
 - Fix regression regarding `config()`
