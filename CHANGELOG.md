@@ -1,3 +1,7 @@
+**v0.5.3**
+
+- Fix regression regarding `config()`
+
 **v0.5.2**
 
 - Remove `camera.getGlPos()` as the base application should handle this since it typically involves a projection + model transformation
