@@ -1,3 +1,7 @@
+**v0.5.5**
+
+- Update camera-2d to `v2.0.0-rc2`
+
 **v0.5.4**
 
 - Replace `key-pressed` with `is-key-down`

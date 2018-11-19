@@ -29,7 +29,7 @@
     "watch": "rollup -cw"
   },
   "dependencies": {
-    "camera-2d-simple": "^2.0.0-rc1",
+    "camera-2d-simple": "^2.0.0-rc2",
     "gl-matrix": "^2.8.1",
     "is-key-down": "^0.1.0",
     "mouse-position": "^2.1.0",
