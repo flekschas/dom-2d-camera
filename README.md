@@ -1,4 +1,4 @@
-# Canvas Warpper for 2D Camera
+# Canvas Wrapper for 2D Camera
 
 [![npm version](https://img.shields.io/npm/v/canvas-camera-2d.svg)](https://www.npmjs.com/package/canvas-camera-2d)
 [![node stability](https://img.shields.io/badge/stability-experimental-EC5314.svg)](https://nodejs.org/api/documentation.html#documentation_stability_index)
