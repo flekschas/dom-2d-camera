@@ -5,8 +5,8 @@ import createMousePosition from "mouse-position";
 import createMousePressed from "mouse-pressed";
 import createScroll from "scroll-speed";
 
-const canvas2dCamera = (
-  canvas,
+const dom2dCamera = (
+  element,
   {
     distance = 1.0,
     target = [0, 0],
@@ -22,12 +22,11 @@ const canvas2dCamera = (
 ) => {
   let camera = createCamera(target, distance, rotation);
   let isChanged = false;
-  let mousePosition = createMousePosition(canvas);
-  let mousePressed = createMousePressed(canvas);
-  let scroll = createScroll(canvas, isZoom);
+  let mousePosition = createMousePosition(element);
+  let mousePressed = createMousePressed(element);
+  let scroll = createScroll(element, isZoom);
 
-  let height = canvas.height / window.devicePixelRatio;
-  let width = canvas.width / window.devicePixelRatio;
+  let { width, height } = element.getBoundingClientRect();
   let aspectRatio = width / height;
   let isAlt = false;
 
@@ -115,8 +114,9 @@ const canvas2dCamera = (
   };
 
   const refresh = () => {
-    height = canvas.height / window.devicePixelRatio;
-    width = canvas.width / window.devicePixelRatio;
+    const bBox = element.getBoundingClientRect();
+    height = bBox.height;
+    width = bBox.width;
     aspectRatio = width / height;
   };
 
@@ -128,4 +128,4 @@ const canvas2dCamera = (
   return camera;
 };
 
-export default canvas2dCamera;
+export default dom2dCamera;
