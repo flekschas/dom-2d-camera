@@ -28,25 +28,27 @@
     "watch": "rollup -cw"
   },
   "dependencies": {
-    "camera-2d-simple": "^2.0.0-rc2",
-    "gl-matrix": "^3.1.0",
-    "is-key-down": "^0.1.0",
-    "mouse-position": "^2.1.0",
-    "mouse-pressed": "^1.0.0",
+    "camera-2d-simple": "~2.0.0-rc2",
+    "gl-matrix": "~3.1.0",
+    "is-key-down": "~0.1.0",
+    "mouse-position": "~2.1.0",
+    "mouse-pressed": "~1.0.0",
     "scroll-speed": "flekschas/scroll-speed"
   },
   "peerDependencies": {
-    "gl-matrix": "^2.8.1"
+    "gl-matrix": "~3.1.0"
   },
   "devDependencies": {
-    "eslint": "^5.7.0",
-    "eslint-config-prettier": "^v3.1.0",
-    "husky": "^1.1.2",
-    "prettier": "1.14.3",
-    "pretty-quick": "^1.8.0",
-    "rollup": "^0.66.6",
-    "rollup-plugin-buble": "^0.19.4",
-    "rollup-plugin-terser": "^3.0.0"
+    "@rollup/plugin-buble": "^0.21.0",
+    "@rollup/plugin-commonjs": "^11.0.1",
+    "@rollup/plugin-node-resolve": "^7.0.0",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^v6.10.0",
+    "husky": "^4.2.1",
+    "prettier": "^1.19.1",
+    "pretty-quick": "^2.0.1",
+    "rollup": "^1.31.0",
+    "rollup-plugin-terser": "^5.2.0"
   },
   "homepage": "https://github.com/flekschas/dom-2d-camera",
   "repository": {
