@@ -1,17 +1,18 @@
 language: node_js
 node_js:
-- '8'
+  - "12"
 branches:
   only:
-  - master
-  - develop
-  - "/^v.*$/"
+    - master
+    - develop
+    - "/^v.*$/"
 before_script:
-- npm install
+  - npm install
 before_deploy:
-- npm run prerelease
+  - npm run prerelease
 deploy:
   - provider: releases
+    edge: true
     skip_cleanup: true
     api_key:
       secure: IOVJCVI9A3ojqRlwbHR/ZsxQrWDDEkBcSPA6S4nb+6qA/MBINskGZc26k2M4wqdy9ghG7BCF3gU7fkay4VCrZOLx6vxlobFlDBiwPrpCI69a/eLhrrp/g/1/EbXaDsxoxQlTB+/kw/L9TEEVlHy1g9HV+qvQIGfb+Xw9BMzQcNDs0XQoO5FwLaDJvMaAkXsQdwiJcdgPS0VecN83nXBlqSyaa84+GJ+3x+QhxYUQqkmOr5l0rMGH37FoHPV8z4DT4tRtEffnTCDUCobYjEHziPtKBJdkfuLDs3p21UwjEav/9NPgFYRmAkuWNDw+gnGxgrYDgLhDtsWUoPxQ9f5NNVJhZ/N58sP9HmJoOqDghH7+CGfyDMzkAzPN2Gmf8EVTkocnkXVvzrH+liiak4WaJz0fk+st9lxT7bpLgPSalDJrZYf0hlCq4I5kSTj0xKUqhsryC2Namc/RRksp2KSNqen7hfz+/qR0ST24nTT6y2eJeiUXdeKe8gsAubjPUTgNiXC/wFhTjJKfC4jF8MJuGGj5MiHCqSNL999JVwcOzc8axh0rQU1lFvY9P9jV8QAh7cY6//+HU4+XzXy46WXOiskioP4B4GuLvGaUtHI6Ig5ENUQqfI26vjkS/uMxCL43inKnGVEqglKp1jXVmAQWroNtz0pvvgF9JTr1tnNpOs0=
@@ -19,13 +20,14 @@ deploy:
     on:
       branch: master
       tags: true
-      repo: flekschas/canvas-camera-2d
+      repo: flekschas/dom-2d-camera
   - provider: npm
+    edge: true
     skip_cleanup: true
-    email: service@lekschas.de
+    email: code@lekschas.de
     api_key:
-      secure: RmGK1wwMMAg1WNz+8xK7MwuU+K2pKITs3M1J4d+lyULrzC9x1MG7Ed2ydjlwPiuIEF96y9H3H07bU5zbfZwLLQ9a+RCCml4XKcEseqQHUpHLxGXzRNJucxaQ9zpORt4sdPTYACO3NIzuKDe453chwJBMSIzYUljNkpc4XqlrURfyMGoLa/OewfOUFIsrCrHPbGtTWUSvwzFSqjF6bbrjAvUIy4v8bfULHI1IvQCAGtRwwBZfRDrpdqi1Pxv1cxG0T/IkmZk7TALoB5m5Ba7sSSDopk+xYLV4aibPm4jnWoin+HfOcQVHLLjuGnuMv97dv3o6dAQfWr7+Tzoy1nlRcj5NTD9ynx6TkELJovryy18IVro/VD1KNhva0uYWhtjQ3CGKGfmCsqogryAdGf/lnF56q8cevZTNZOOQKgAD3R5M8fpzD0hxh2J+mMm+U/ztwmVG95XM27n6umYM4HLyKqW5E2j99iRTspyVBP+8U34ec1lfNt/BJ5Fe2Bm34AbMYToctBinvzHCO+Q6w6D2iOtaQ3htQZA2DaSujP0CmwF5UK9ueJ/NxgNVdxrxsUM/XM5W+uOUcNtAgdeTjaA7pBbNLZScUYjVvbCyBLCLTga3MACDakLDb3OM+4AxEcFmtGSdLrAeTC5wS700xIZ7TijZp8D7gnzmRjJkppDsoF0=
+      secure: H1I7CuNn6QO93fQ5OSVBcKtv4USNMLpz086ldMCaRCjjWS5QHlrciiMxUhJPBaEO62V9GPg5GMiYNdZb0k90fDqNSLkt64pUxKmZLhJOrV1kuMnbeJ4KKwjEDedJ4XxKrba38RaP4x0xhsD/+ITTL9MdZO9Q0yEu8p9CiihRbG2CKzJXjGeOOQyc4WgVKuB5Mk3qG6zN3xB7Wz1rsof/VW2s1GYTDyodHjT++gA6LJHJd56Bp/8GvEtHWhPbYL1wvKNiafkSVmdFHv5lPLfrAIb+17NPOa3MNNWWCQxtW3liSeCDZbt0mFGA+xXVnxb+qAaWMffuDMrXvGD5cW8i8oidryJL1u7sQwY5yQWHSvJBXRfnzGWN6MxKCtNKXpVMqWVpiTPdvcbQzbaeQXa6nMb16kGhao8M7aCZuh3Zm8n5kCdDUCp5wVnupUpa02n+8cHenWBTEy4yfTvR4LUuvZh0C0YOc12OdTKV6zGH3cuOgqeZF/2kr4QVTt7ZG+ppBqzDAtbS12cU4uaCkA5w4TuF3QkZ/h9lQFQ4vzOnO7yGwpxkYWj6ZDUekM5ES009wMNYvjosTlS/XYS2UhG2uQ2isrnhVvUMXwXGp3+nZoUeKiZQKBLvwpciXDG3Nc8MU5jtsWIvy4l4hn44rtIWp3UBhRn+VWDMf1H9kR+mIZU=
     on:
       branch: master
       tags: true
-      repo: flekschas/canvas-camera-2d
+      repo: flekschas/dom-2d-camera
