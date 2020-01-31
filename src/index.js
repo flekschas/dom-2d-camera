@@ -1,5 +1,5 @@
 import createCamera from "camera-2d-simple";
-import { vec2 } from "gl-matrix";
+import * as vec2 from "gl-matrix/vec2";
 import isKeyDown from "is-key-down";
 import createMousePosition from "mouse-position";
 import createMousePressed from "mouse-pressed";

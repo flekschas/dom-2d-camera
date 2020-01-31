@@ -25,6 +25,9 @@ Also see:
 
 ```
 npm i @flekschas/dom-2d-camera
+
+// Peer dependencies not automatically included
+npm i gl-matrix
 ```
 
 ## API

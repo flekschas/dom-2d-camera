@@ -8,23 +8,11 @@ const config = (file, format, plugins) => ({
     format,
     file,
     globals: {
-      "camera-2d-simple": "createCamera2d",
-      "gl-matrix": "glMatrix",
-      "is-key-down": "isKeyDown",
-      "mouse-position": "createMousePosition",
-      "mouse-pressed": "createMousePressed",
-      "scroll-speed": "createScroll"
+      "gl-matrix": "glMatrix"
     }
   },
   plugins,
-  external: [
-    "camera-2d-simple",
-    "gl-matrix",
-    "is-key-down",
-    "mouse-position",
-    "mouse-pressed",
-    "scroll-speed"
-  ]
+  external: ["gl-matrix"]
 });
 
 export default [
