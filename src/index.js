@@ -11,6 +11,7 @@ const dom2dCamera = (
     distance = 1.0,
     target = [0, 0],
     rotation = 0,
+    isNdc = true,
     isFixed = false,
     isPan = true,
     panSpeed = 1,
@@ -30,6 +31,20 @@ const dom2dCamera = (
   let aspectRatio = width / height;
   let isAlt = false;
 
+  const transformPanX = isNdc
+    ? dX => (dX / width) * 2 * aspectRatio // to normalized device coords
+    : dX => dX;
+  const transformPanY = isNdc
+    ? dY => (dY / height) * 2 // to normalized device coords
+    : dY => -dY;
+
+  const transformScaleX = isNdc
+    ? x => (-1 + (x / width) * 2) * aspectRatio // to normalized device coords
+    : x => x;
+  const transformScaleY = isNdc
+    ? y => 1 - (y / height) * 2 // to normalized device coords
+    : y => y;
+
   const tick = () => {
     if (isFixed) return false;
 
@@ -43,8 +58,8 @@ const dom2dCamera = (
       // To pan 1:1 we need to half the width and height because the uniform
       // coordinate system goes from -1 to 1.
       camera.pan([
-        ((panSpeed * (x - pX)) / width) * 2 * aspectRatio,
-        ((panSpeed * (pY - y)) / height) * 2
+        transformPanX(panSpeed * (x - pX)),
+        transformPanY(panSpeed * (pY - y))
       ]);
       isChanged = true;
     }
@@ -53,10 +68,10 @@ const dom2dCamera = (
       const dZ = zoomSpeed * Math.exp(scroll[1] / height);
 
       // Get normalized device coordinates (NDC)
-      const xNdc = (-1 + (x / width) * 2) * aspectRatio;
-      const yNdc = 1 - (y / height) * 2;
+      const transformedX = transformScaleX(x);
+      const transformedY = transformScaleY(y);
 
-      camera.scale(1 / dZ, [xNdc, yNdc]);
+      camera.scale(1 / dZ, [transformedX, transformedY]);
 
       isChanged = true;
     }
