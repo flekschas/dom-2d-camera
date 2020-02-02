@@ -1,23 +1,22 @@
 {
-  "name": "canvas-camera-2d",
-  "version": "0.5.5",
-  "description": "A canvas wrapper for a 2D camera",
+  "name": "@flekschas/dom-2d-camera",
+  "version": "1.0.0-rc.1",
+  "description": "A wrapper for attaching a 2D camera to a DOM element",
   "author": "Fritz Lekschas",
   "keywords": [
+    "dom",
     "canvas",
     "2d",
     "camera",
     "webgl"
   ],
   "license": "MIT",
-  "main": "dist/canvas-camera-2d.js",
-  "module": "src/index.js",
-  "unpkg": "dist/canvas-camera-2d.min.js",
-  "jsdelivr": "dist/canvas-camera-2d.min.js",
+  "main": "dist/dom-2d-camera.js",
+  "module": "dist/dom-2d-camera.esm.js",
+  "unpkg": "dist/dom-2d-camera.min.js",
+  "jsdelivr": "dist/dom-2d-camera.min.js",
   "files": [
-    "src/index.js",
-    "dist/canvas-camera-2d.js",
-    "dist/canvas-camera-2d.min.js"
+    "dist"
   ],
   "scripts": {
     "build": "rollup -c",
@@ -29,36 +28,34 @@
     "watch": "rollup -cw"
   },
   "dependencies": {
-    "camera-2d-simple": "^2.0.0-rc2",
-    "gl-matrix": "^2.8.1",
-    "is-key-down": "^0.1.0",
-    "mouse-position": "^2.1.0",
-    "mouse-pressed": "^1.0.0",
+    "camera-2d-simple": "~2.0.0",
+    "gl-matrix": "~3.1.0",
+    "is-key-down": "~0.1.0",
+    "mouse-position": "~2.1.0",
+    "mouse-pressed": "~1.0.0",
     "scroll-speed": "flekschas/scroll-speed"
   },
   "peerDependencies": {
-    "camera-2d-simple": "^2.0.0-rc1",
-    "is-key-down": "^0.1.0",
-    "mouse-position": "^2.1.0",
-    "mouse-pressed": "^1.0.0",
-    "scroll-speed": "flekschas/scroll-speed"
+    "gl-matrix": "~3.1.0"
   },
   "devDependencies": {
-    "eslint": "^5.7.0",
-    "eslint-config-prettier": "^v3.1.0",
-    "husky": "^1.1.2",
-    "prettier": "1.14.3",
-    "pretty-quick": "^1.8.0",
-    "rollup": "^0.66.6",
-    "rollup-plugin-buble": "^0.19.4",
-    "rollup-plugin-terser": "^3.0.0"
+    "@rollup/plugin-buble": "^0.21.0",
+    "@rollup/plugin-commonjs": "^11.0.1",
+    "@rollup/plugin-node-resolve": "^7.0.0",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^v6.10.0",
+    "husky": "^4.2.1",
+    "prettier": "^1.19.1",
+    "pretty-quick": "^2.0.1",
+    "rollup": "^1.31.0",
+    "rollup-plugin-terser": "^5.2.0"
   },
-  "homepage": "https://github.com/flekschas/canvas-camera-2d",
+  "homepage": "https://github.com/flekschas/dom-2d-camera",
   "repository": {
     "type": "git",
-    "url": "git://github.com/flekschas/canvas-camera-2d.git"
+    "url": "git://github.com/flekschas/dom-2d-camera.git"
   },
   "bugs": {
-    "url": "https://github.com/flekschas/canvas-camera-2d/issues"
+    "url": "https://github.com/flekschas/dom-2d-camera/issues"
   }
 }

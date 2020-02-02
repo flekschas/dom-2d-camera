@@ -1,16 +1,17 @@
 import createCamera from "camera-2d-simple";
-import { vec2 } from "gl-matrix";
+import * as vec2 from "gl-matrix/vec2";
 import isKeyDown from "is-key-down";
 import createMousePosition from "mouse-position";
 import createMousePressed from "mouse-pressed";
 import createScroll from "scroll-speed";
 
-const canvas2dCamera = (
-  canvas,
+const dom2dCamera = (
+  element,
   {
     distance = 1.0,
     target = [0, 0],
     rotation = 0,
+    isNdc = true,
     isFixed = false,
     isPan = true,
     panSpeed = 1,
@@ -22,14 +23,27 @@ const canvas2dCamera = (
 ) => {
   let camera = createCamera(target, distance, rotation);
   let isChanged = false;
-  let mousePosition = createMousePosition(canvas);
-  let mousePressed = createMousePressed(canvas);
-  let scroll = createScroll(canvas, isZoom);
+  let mousePosition = createMousePosition(element);
+  let mousePressed = createMousePressed(element);
+  let scroll = createScroll(element, isZoom);
 
-  let height = canvas.height / window.devicePixelRatio;
-  let width = canvas.width / window.devicePixelRatio;
+  let { width, height } = element.getBoundingClientRect();
   let aspectRatio = width / height;
   let isAlt = false;
+
+  const transformPanX = isNdc
+    ? dX => (dX / width) * 2 * aspectRatio // to normalized device coords
+    : dX => dX;
+  const transformPanY = isNdc
+    ? dY => (dY / height) * 2 // to normalized device coords
+    : dY => -dY;
+
+  const transformScaleX = isNdc
+    ? x => (-1 + (x / width) * 2) * aspectRatio // to normalized device coords
+    : x => x;
+  const transformScaleY = isNdc
+    ? y => 1 - (y / height) * 2 // to normalized device coords
+    : y => y;
 
   const tick = () => {
     if (isFixed) return false;
@@ -44,8 +58,8 @@ const canvas2dCamera = (
       // To pan 1:1 we need to half the width and height because the uniform
       // coordinate system goes from -1 to 1.
       camera.pan([
-        ((panSpeed * (x - pX)) / width) * 2 * aspectRatio,
-        ((panSpeed * (pY - y)) / height) * 2
+        transformPanX(panSpeed * (x - pX)),
+        transformPanY(panSpeed * (pY - y))
       ]);
       isChanged = true;
     }
@@ -54,15 +68,15 @@ const canvas2dCamera = (
       const dZ = zoomSpeed * Math.exp(scroll[1] / height);
 
       // Get normalized device coordinates (NDC)
-      const xNdc = (-1 + (x / width) * 2) * aspectRatio;
-      const yNdc = 1 - (y / height) * 2;
+      const transformedX = transformScaleX(x);
+      const transformedY = transformScaleY(y);
 
-      camera.scale(1 / dZ, [xNdc, yNdc]);
+      camera.scale(1 / dZ, [transformedX, transformedY]);
 
       isChanged = true;
     }
 
-    if (isRotate && (mousePressed.left && isAlt)) {
+    if (isRotate && mousePressed.left && isAlt) {
       const wh = width / 2;
       const hh = height / 2;
       const x1 = pX - wh;
@@ -115,8 +129,9 @@ const canvas2dCamera = (
   };
 
   const refresh = () => {
-    height = canvas.height / window.devicePixelRatio;
-    width = canvas.width / window.devicePixelRatio;
+    const bBox = element.getBoundingClientRect();
+    height = bBox.height;
+    width = bBox.width;
     aspectRatio = width / height;
   };
 
@@ -128,4 +143,4 @@ const canvas2dCamera = (
   return camera;
 };
 
-export default canvas2dCamera;
+export default dom2dCamera;
