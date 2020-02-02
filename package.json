@@ -57,5 +57,8 @@
   },
   "bugs": {
     "url": "https://github.com/flekschas/dom-2d-camera/issues"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
