@@ -6,11 +6,11 @@
 
 - Add `isNdc` option, which is set to `true` by default. If set to `false` the
   camera is working in pixel coordinates
-- Update _camera-2d_ to `v2.0.0`
+- Decreased dependencies to 3rd party helpers
 
 ## v0.5.5
 
-- Update _camera-2d_ to `v2.0.0-rc2`
+- Update _camera-2d_ to `v2.0`
 
 ## v0.5.4
 

@@ -25,8 +25,8 @@ Also see:
 ```
 npm i @flekschas/dom-2d-camera
 
-// Peer dependencies not automatically included
-npm i gl-matrix
+// Peer dependencies are not automatically included. To install them do:
+npm i camera-2d-simple gl-matrix
 ```
 
 ## API
