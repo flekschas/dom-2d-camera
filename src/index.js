@@ -1,9 +1,5 @@
 import createCamera from "camera-2d-simple";
-import * as vec2 from "gl-matrix/vec2";
-import isKeyDown from "is-key-down";
-import createMousePosition from "mouse-position";
-import createMousePressed from "mouse-pressed";
-import createScroll from "scroll-speed";
+import { vec2 } from "gl-matrix";
 
 const dom2dCamera = (
   element,
@@ -23,9 +19,12 @@ const dom2dCamera = (
 ) => {
   let camera = createCamera(target, distance, rotation);
   let isChanged = false;
-  let mousePosition = createMousePosition(element);
-  let mousePressed = createMousePressed(element);
-  let scroll = createScroll(element, isZoom);
+  let mouseX = 0;
+  let mouseY = 0;
+  let prevMouseX = 0;
+  let prevMouseY = 0;
+  let isLeftMousePressed = false;
+  let yScroll = 0;
 
   let { width, height } = element.getBoundingClientRect();
   let aspectRatio = width / height;
@@ -48,41 +47,37 @@ const dom2dCamera = (
   const tick = () => {
     if (isFixed) return false;
 
-    isAlt = isKeyDown("Alt");
     isChanged = false;
 
-    const { 0: x, 1: y } = mousePosition;
-    const { 0: pX, 1: pY } = mousePosition.prev;
-
-    if (isPan && mousePressed.left && !isAlt) {
+    if (isPan && isLeftMousePressed && !isAlt) {
       // To pan 1:1 we need to half the width and height because the uniform
       // coordinate system goes from -1 to 1.
       camera.pan([
-        transformPanX(panSpeed * (x - pX)),
-        transformPanY(panSpeed * (pY - y))
+        transformPanX(panSpeed * (mouseX - prevMouseX)),
+        transformPanY(panSpeed * (prevMouseY - mouseY))
       ]);
       isChanged = true;
     }
 
-    if (isZoom && scroll[1]) {
-      const dZ = zoomSpeed * Math.exp(scroll[1] / height);
+    if (isZoom && yScroll) {
+      const dZ = zoomSpeed * Math.exp(yScroll / height);
 
       // Get normalized device coordinates (NDC)
-      const transformedX = transformScaleX(x);
-      const transformedY = transformScaleY(y);
+      const transformedX = transformScaleX(mouseX);
+      const transformedY = transformScaleY(mouseY);
 
       camera.scale(1 / dZ, [transformedX, transformedY]);
 
       isChanged = true;
     }
 
-    if (isRotate && mousePressed.left && isAlt) {
+    if (isRotate && isLeftMousePressed && isAlt) {
       const wh = width / 2;
       const hh = height / 2;
-      const x1 = pX - wh;
-      const y1 = hh - pY;
-      const x2 = x - wh;
-      const y2 = hh - y;
+      const x1 = prevMouseX - wh;
+      const y1 = hh - prevMouseY;
+      const x2 = mouseX - wh;
+      const y2 = hh - mouseY;
       // Angle between the start and end mouse position with respect to the
       // viewport center
       const radians = vec2.angle([x1, y1], [x2, y2]);
@@ -94,20 +89,12 @@ const dom2dCamera = (
       isChanged = true;
     }
 
-    scroll.flush();
-    mousePosition.flush();
+    // Reset scroll delta and mouse position
+    yScroll = 0;
+    prevMouseX = mouseX;
+    prevMouseY = mouseY;
 
     return isChanged;
-  };
-
-  const dispose = () => {
-    scroll.dispose();
-    mousePressed.dispose();
-    mousePosition.dispose();
-    camera = undefined;
-    scroll = undefined;
-    mousePressed = undefined;
-    mousePosition = undefined;
   };
 
   const config = ({
@@ -134,6 +121,55 @@ const dom2dCamera = (
     width = bBox.width;
     aspectRatio = width / height;
   };
+
+  const keyUpHandler = () => {
+    isAlt = false;
+  };
+
+  const keyDownHandler = event => {
+    isAlt = event.altKey;
+    console.log("IS ALT?", isAlt, event.altKey);
+  };
+
+  const mouseUpHandler = () => {
+    isLeftMousePressed = false;
+  };
+
+  const mouseDownHandler = event => {
+    isLeftMousePressed = event.buttons === 1;
+  };
+
+  const mouseMoveHandler = event => {
+    prevMouseX = mouseX;
+    prevMouseY = mouseY;
+    mouseX = event.clientX;
+    mouseY = event.clientY;
+  };
+
+  const wheelHandler = event => {
+    const scale = event.deltaMode === 1 ? 12 : 1;
+
+    yScroll += scale * (event.deltaY || 0);
+
+    event.preventDefault();
+  };
+
+  const dispose = () => {
+    camera = undefined;
+    window.removeEventListener("keydown", keyDownHandler);
+    window.removeEventListener("keyup", keyUpHandler);
+    element.removeEventListener("mousedown", mouseDownHandler);
+    window.removeEventListener("mouseup", mouseUpHandler);
+    window.removeEventListener("mousemove", mouseMoveHandler);
+    element.removeEventListener("wheel", wheelHandler);
+  };
+
+  window.addEventListener("keydown", keyDownHandler, false);
+  window.addEventListener("keyup", keyUpHandler, false);
+  element.addEventListener("mousedown", mouseDownHandler, false);
+  window.addEventListener("mouseup", mouseUpHandler, false);
+  window.addEventListener("mousemove", mouseMoveHandler, false);
+  element.addEventListener("wheel", wheelHandler, false);
 
   camera.config = config;
   camera.dispose = dispose;

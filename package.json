@@ -29,11 +29,7 @@
   },
   "dependencies": {
     "camera-2d-simple": "~2.0.0",
-    "gl-matrix": "~3.1.0",
-    "is-key-down": "~0.1.0",
-    "mouse-position": "~2.1.0",
-    "mouse-pressed": "~1.0.0",
-    "scroll-speed": "flekschas/scroll-speed"
+    "gl-matrix": "~3.1.0"
   },
   "peerDependencies": {
     "gl-matrix": "~3.1.0"
