@@ -19,11 +19,11 @@
     "dist"
   ],
   "scripts": {
-    "build": "rollup -c",
+    "build": "rm -rf dist/*; rollup -c",
     "lint": "eslint src rollup.config.js",
     "precommit": "pretty-quick --staged",
     "prepublishOnly": "npm run lint",
-    "prerelease": "rm -rf dist/*; npm run build; zip -r dist.zip dist",
+    "prerelease": "npm run build; zip -r dist.zip dist",
     "pretest": "npm run lint",
     "watch": "rollup -cw"
   },
