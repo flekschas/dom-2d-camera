@@ -1,7 +1,5 @@
 import buble from "@rollup/plugin-buble";
-import commonjs from "@rollup/plugin-commonjs";
 import filesize from "rollup-plugin-filesize";
-import resolve from "@rollup/plugin-node-resolve";
 import { terser } from "rollup-plugin-terser";
 import visualizer from "rollup-plugin-visualizer";
 
@@ -12,15 +10,16 @@ const config = (file, format, plugins = []) => ({
     format,
     file,
     globals: {
-      "gl-matrix/vec2": "glMatrix.vec2"
+      "gl-matrix": "glMatrix",
+      "camera-2d-simple": "createCamera2d"
     }
   },
-  plugins: [resolve(), commonjs({ sourceMap: false }), ...plugins],
-  external: ["gl-matrix/vec2"]
+  plugins: [...plugins],
+  external: ["gl-matrix", "camera-2d-simple"]
 });
 
 export default [
   config("dist/dom-2d-camera.js", "umd", [buble(), visualizer(), filesize()]),
   config("dist/dom-2d-camera.min.js", "umd", [buble(), terser()]),
-  config("dist/dom-2d-camera.esm.js", "esm")
+  config("dist/dom-2d-camera.esm.js", "es")
 ];
