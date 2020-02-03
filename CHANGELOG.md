@@ -6,6 +6,13 @@
 
 - Add `isNdc` option, which is set to `true` by default. If set to `false` the
   camera is working in pixel coordinates
+- Add the following options for event handlers to be fired after the camera has updated:
+  - `onKeyDown`
+  - `onKeyUp`
+  - `onMouseDown`
+  - `onMouseUp`
+  - `onMouseMove`
+  - `onWheel`
 - Decreased dependencies to 3rd party helpers
 
 ## v0.5.5

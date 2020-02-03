@@ -52,8 +52,16 @@ The following options are available:
 - `rotateSpeed`: initial panning speed. [dtype: number, default: `1`]
 - `isZoom`: if `true` zooming is enabled. [dtype: bool, default: `true`]
 - `zoomSpeed`: initial zooming speed. [dtype: number, default: `1`]
+- `onKeyDown`: callback handler for `keyDown` [dtype: function, default: `() => {}`]
+- `onKeyUp`: callback handler for `keyUp` [dtype: function, default: `() => {}`]
+- `onMouseDown`: callback handler for `mouseDown` [dtype: function, default: `() => {}`]
+- `onMouseUp`: callback handler for `mouseUp` [dtype: function, default: `() => {}`]
+- `onMouseMove`: callback handler for `mouseMove` [dtype: function, default: `() => {}`]
+- `onWheel`: callback handler for `wheel` [dtype: function, default: `() => {}`]
 
 **Returns** a new 2D camera object.
+
+**Note** the event callback functions are always triggered _after_ the camera updated! This is useful if your main application wants to listen to that specific event _and_ be sure that the camera is up to date.
 
 The [camera's API](https://github.com/flekschas/camera-2d#api) is augmented with the following additional endpoints:
 

@@ -14,7 +14,13 @@ const dom2dCamera = (
     isRotate = true,
     rotateSpeed = 1,
     isZoom = true,
-    zoomSpeed = 1
+    zoomSpeed = 1,
+    onKeyDown = () => {},
+    onKeyUp = () => {},
+    onMouseDown = () => {},
+    onMouseUp = () => {},
+    onMouseMove = () => {},
+    onWheel = () => {}
   } = {}
 ) => {
   let camera = createCamera(target, distance, rotation);
@@ -122,20 +128,28 @@ const dom2dCamera = (
     aspectRatio = width / height;
   };
 
-  const keyUpHandler = () => {
+  const keyUpHandler = event => {
     isAlt = false;
+
+    onKeyUp(event);
   };
 
   const keyDownHandler = event => {
     isAlt = event.altKey;
+
+    onKeyDown(event);
   };
 
-  const mouseUpHandler = () => {
+  const mouseUpHandler = event => {
     isLeftMousePressed = false;
+
+    onMouseUp(event);
   };
 
   const mouseDownHandler = event => {
     isLeftMousePressed = event.buttons === 1;
+
+    onMouseDown(event);
   };
 
   const mouseMoveHandler = event => {
@@ -143,12 +157,16 @@ const dom2dCamera = (
     prevMouseY = mouseY;
     mouseX = event.clientX;
     mouseY = event.clientY;
+
+    onMouseMove(event);
   };
 
   const wheelHandler = event => {
     const scale = event.deltaMode === 1 ? 12 : 1;
 
     yScroll += scale * (event.deltaY || 0);
+
+    onWheel(event);
 
     event.preventDefault();
   };
