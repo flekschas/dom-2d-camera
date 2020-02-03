@@ -20,5 +20,5 @@ const config = (file, format, plugins = []) => ({
 export default [
   config("dist/dom-2d-camera.js", "umd", [buble()]),
   config("dist/dom-2d-camera.min.js", "umd", [buble(), terser()]),
-  config("dist/dom-2d-camera.min.js", "esm")
+  config("dist/dom-2d-camera.esm.js", "esm")
 ];
