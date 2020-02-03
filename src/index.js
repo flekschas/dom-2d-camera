@@ -128,7 +128,6 @@ const dom2dCamera = (
 
   const keyDownHandler = event => {
     isAlt = event.altKey;
-    console.log("IS ALT?", isAlt, event.altKey);
   };
 
   const mouseUpHandler = () => {
