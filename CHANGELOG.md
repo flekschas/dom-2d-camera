@@ -2,7 +2,7 @@
 
 **Important**
 
-- Renamed this package from `canvas-camera-2d` to `@flekschas/dom-2d-camera`
+- Rename this package from `canvas-camera-2d` to `dom-2d-camera`
 
 - Add `isNdc` option, which is set to `true` by default. If set to `false` the
   camera is working in pixel coordinates
@@ -13,7 +13,7 @@
   - `onMouseUp`
   - `onMouseMove`
   - `onWheel`
-- Decreased dependencies to 3rd party helpers
+- Decrease dependencies on 3rd-party packages
 
 ## v0.5.5
 
