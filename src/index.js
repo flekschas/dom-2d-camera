@@ -32,8 +32,11 @@ const dom2dCamera = (
   let isLeftMousePressed = false;
   let yScroll = 0;
 
-  let { width, height } = element.getBoundingClientRect();
-  let aspectRatio = width / height;
+  let top = 0;
+  let left = 0;
+  let width = 1;
+  let height = 1;
+  let aspectRatio = 1;
   let isAlt = false;
 
   const transformPanX = isNdc
@@ -123,8 +126,10 @@ const dom2dCamera = (
 
   const refresh = () => {
     const bBox = element.getBoundingClientRect();
-    height = bBox.height;
+    top = bBox.top;
+    left = bBox.left;
     width = bBox.width;
+    height = bBox.height;
     aspectRatio = width / height;
   };
 
@@ -155,8 +160,8 @@ const dom2dCamera = (
   const mouseMoveHandler = event => {
     prevMouseX = mouseX;
     prevMouseY = mouseY;
-    mouseX = event.clientX;
-    mouseY = event.clientY;
+    mouseX = event.clientX - left;
+    mouseY = event.clientY - top;
 
     onMouseMove(event);
   };
@@ -187,6 +192,8 @@ const dom2dCamera = (
   window.addEventListener("mouseup", mouseUpHandler, false);
   window.addEventListener("mousemove", mouseMoveHandler, false);
   element.addEventListener("wheel", wheelHandler, false);
+
+  refresh();
 
   camera.config = config;
   camera.dispose = dispose;
