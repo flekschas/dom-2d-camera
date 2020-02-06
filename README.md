@@ -1,8 +1,8 @@
 # DOM 2D Camera
 
-[![npm version](https://img.shields.io/npm/v/@flekschas/dom-2d-camera.svg)](https://www.npmjs.com/package/@flekschas/dom-2d-camera)
+[![npm version](https://img.shields.io/npm/v/dom-2d-camera.svg)](https://www.npmjs.com/package/dom-2d-camera)
 [![build status](https://travis-ci.org/flekschas/dom-2d-camera.svg?branch=master)](https://travis-ci.org/flekschas/dom-2d-camera)
-[![gzipped size](https://img.shields.io/badge/gzipped%20size-1.2%20KB-6ae3c7.svg)](https://unpkg.com/dom-2d-camera)
+[![gzipped size](http://img.badgesize.io/https://unpkg.com/dom-2d-camera/dist/dom-2d-camera.min.js?compression=gzip&style=flat-square&color=6ae3c7)](https://unpkg.com/dom-2d-camera/dist/dom-2d-camera.min.js)
 [![code style prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 [![demo](https://img.shields.io/badge/demo-online-6ae3c7.svg)](https://flekschas.github.io/regl-scatterplot/)
 
@@ -23,7 +23,7 @@ Also see:
 ## Install
 
 ```
-npm i @flekschas/dom-2d-camera
+npm i dom-2d-camera
 
 // Peer dependencies are not automatically included. To install them do:
 npm i camera-2d-simple gl-matrix
@@ -32,7 +32,7 @@ npm i camera-2d-simple gl-matrix
 ## API
 
 ```javascript
-import createDom2dCamera from "@flekschas/dom-2d-camera";
+import createDom2dCamera from "dom-2d-camera";
 ```
 
 ### camera = createDom2dCamera(element, options = {})
