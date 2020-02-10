@@ -167,13 +167,13 @@ const dom2dCamera = (
   };
 
   const wheelHandler = event => {
+    event.preventDefault();
+
     const scale = event.deltaMode === 1 ? 12 : 1;
 
     yScroll += scale * (event.deltaY || 0);
 
     onWheel(event);
-
-    event.preventDefault();
   };
 
   const dispose = () => {
@@ -186,12 +186,12 @@ const dom2dCamera = (
     element.removeEventListener("wheel", wheelHandler);
   };
 
-  window.addEventListener("keydown", keyDownHandler, false);
-  window.addEventListener("keyup", keyUpHandler, false);
-  element.addEventListener("mousedown", mouseDownHandler, false);
-  window.addEventListener("mouseup", mouseUpHandler, false);
-  window.addEventListener("mousemove", mouseMoveHandler, false);
-  element.addEventListener("wheel", wheelHandler, false);
+  window.addEventListener("keydown", keyDownHandler, { passive: true });
+  window.addEventListener("keyup", keyUpHandler, { passive: true });
+  element.addEventListener("mousedown", mouseDownHandler, { passive: true });
+  window.addEventListener("mouseup", mouseUpHandler, { passive: true });
+  window.addEventListener("mousemove", mouseMoveHandler, { passive: true });
+  element.addEventListener("wheel", wheelHandler, { passive: false });
 
   refresh();
 
