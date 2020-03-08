@@ -37,7 +37,7 @@ import createDom2dCamera from "dom-2d-camera";
 
 ### camera = createDom2dCamera(element, options = {})
 
-Bins a [`camera-2d-simple`](https://github.com/flekschas/camera-2d) instance to the DOM `element`. This effectively attaches event listeners required for pan&zoom interaction.
+Binds a [`camera-2d-simple`](https://github.com/flekschas/camera-2d) instance to the DOM `element`. This effectively attaches event listeners required for pan&zoom interaction.
 
 The following options are available:
 
