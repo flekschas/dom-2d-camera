@@ -52,6 +52,7 @@ The following options are available:
 - `rotateSpeed`: initial panning speed. [dtype: number, default: `1`]
 - `isZoom`: if `true` zooming is enabled. [dtype: bool, default: `true`]
 - `zoomSpeed`: initial zooming speed. [dtype: number, default: `1`]
+- `viewCenter`: see [camera-2d](https://github.com/flekschas/camera-2d#createCamera) [dtype: array, default: `null`]
 - `onKeyDown`: callback handler for `keyDown` [dtype: function, default: `() => {}`]
 - `onKeyUp`: callback handler for `keyUp` [dtype: function, default: `() => {}`]
 - `onMouseDown`: callback handler for `mouseDown` [dtype: function, default: `() => {}`]

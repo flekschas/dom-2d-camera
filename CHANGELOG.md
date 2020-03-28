@@ -6,6 +6,7 @@
 
 - Add `isNdc` option, which is set to `true` by default. If set to `false` the
   camera is working in pixel coordinates
+- Add `viewCenter` option to the constructor for working in pixel coordinates
 - Add the following options for event handlers to be fired after the camera has updated:
   - `onKeyDown`
   - `onKeyUp`
