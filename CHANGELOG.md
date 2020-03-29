@@ -1,3 +1,7 @@
+## v1.0.1
+
+- Add `scaleBounds` option to the constructor for limiting the scale extent
+
 ## v1.0.0
 
 **Important**

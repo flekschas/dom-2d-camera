@@ -16,6 +16,7 @@ const dom2dCamera = (
     isZoom = true,
     zoomSpeed = 1,
     viewCenter = null,
+    scaleBounds = null,
     onKeyDown = () => {},
     onKeyUp = () => {},
     onMouseDown = () => {},
@@ -24,7 +25,13 @@ const dom2dCamera = (
     onWheel = () => {}
   } = {}
 ) => {
-  let camera = createCamera(target, distance, rotation, viewCenter);
+  let camera = createCamera(
+    target,
+    distance,
+    rotation,
+    viewCenter,
+    scaleBounds
+  );
   let isChanged = false;
   let mouseX = 0;
   let mouseY = 0;
