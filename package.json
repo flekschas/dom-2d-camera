@@ -1,6 +1,6 @@
 {
   "name": "dom-2d-camera",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A wrapper for attaching a 2D camera to a DOM element",
   "author": "Fritz Lekschas",
   "keywords": [
