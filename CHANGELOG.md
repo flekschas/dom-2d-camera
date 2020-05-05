@@ -1,3 +1,7 @@
+## v1.0.2
+
+- Fix incorrect default parameters for `viewCenter` and `scaleBounds`
+
 ## v1.0.1
 
 - Add `scaleBounds` option to the constructor for limiting the scale extent
