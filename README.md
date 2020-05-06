@@ -44,7 +44,7 @@ The following options are available:
 - `distance`: initial distance of the camera. [dtype: number, default: `1`]
 - `target`: x, y position the camera is looking in GL coordinates. [dtype: array of numbers, default: `[0,0]`]
 - `rotation`: rotation in radians around the z axis. [dtype: number, default: `0`]
-- `isNdc`: if `true` the camera operates in [normalized device coordinates](https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/WebGL_model_view_projection). This is useful when the camera is used in a WebGL program. [dtype: bool, default: `false`]
+- `isNdc`: if `true` the camera operates in [normalized device coordinates](https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/WebGL_model_view_projection). This is useful when the camera is used in a WebGL program. [dtype: bool, default: `true`]
 - `isFixed`: if `true` panning, rotating, and zooming is disabled. [dtype: bool, default: `false`]
 - `isPan`: if `true` panning is enabled. [dtype: bool, default: `true`]
 - `panSpeed`: initial panning speed. [dtype: number, default: `1`]
