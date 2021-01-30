@@ -1,6 +1,15 @@
 import createCamera from "camera-2d-simple";
 import { vec2 } from "gl-matrix";
 
+const VALID_ROTATE_KEYS = ["alt", "shift", "meta", "cmd", "ctrl"];
+const KEY_MAP = {
+  alt: "altKey",
+  shift: "shiftKey",
+  meta: "metaKey",
+  cmd: "metaKey",
+  ctrl: "ctrlKey"
+};
+
 const dom2dCamera = (
   element,
   {
@@ -15,6 +24,7 @@ const dom2dCamera = (
     rotateSpeed = 1,
     isZoom = true,
     zoomSpeed = 1,
+    rotateKey = "alt",
     viewCenter,
     scaleBounds,
     onKeyDown = () => {},
@@ -121,7 +131,8 @@ const dom2dCamera = (
     isZoom: newIsZoom = null,
     panSpeed: newPanSpeed = null,
     rotateSpeed: newRotateSpeed = null,
-    zoomSpeed: newZoomSpeed = null
+    zoomSpeed: newZoomSpeed = null,
+    rotateKey: newRotateKey = null
   } = {}) => {
     isFixed = newIsFixed !== null ? newIsFixed : isFixed;
     isPan = newIsPan !== null ? newIsPan : isPan;
@@ -130,6 +141,10 @@ const dom2dCamera = (
     panSpeed = +newPanSpeed > 0 ? newPanSpeed : panSpeed;
     rotateSpeed = +newRotateSpeed > 0 ? newRotateSpeed : rotateSpeed;
     zoomSpeed = +newZoomSpeed > 0 ? newZoomSpeed : zoomSpeed;
+    rotateKey =
+      newRotateKey !== null && VALID_ROTATE_KEYS.includes(newRotateKey)
+        ? newRotateKey
+        : rotateKey;
   };
 
   const refresh = () => {
@@ -148,7 +163,7 @@ const dom2dCamera = (
   };
 
   const keyDownHandler = event => {
-    isAlt = event.altKey;
+    isAlt = event[KEY_MAP[rotateKey]];
 
     onKeyDown(event);
   };

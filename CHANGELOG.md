@@ -1,3 +1,7 @@
+## v1.1.0
+
+- Allow changing the modofier key for rotating the camera via `rotateKey`. Valid keys are `alt`, `shift`, `ctrl`, and `cmd`
+
 ## v1.0.2
 
 - Fix incorrect default parameters for `viewCenter` and `scaleBounds`
