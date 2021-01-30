@@ -1,8 +1,8 @@
 # DOM 2D Camera
 
 [![npm version](https://img.shields.io/npm/v/dom-2d-camera.svg)](https://www.npmjs.com/package/dom-2d-camera)
-[![build status](https://travis-ci.org/flekschas/dom-2d-camera.svg?branch=master)](https://travis-ci.org/flekschas/dom-2d-camera)
-[![gzipped size](http://img.badgesize.io/https://unpkg.com/dom-2d-camera/dist/dom-2d-camera.min.js?compression=gzip&style=flat-square&color=6ae3c7)](https://unpkg.com/dom-2d-camera/dist/dom-2d-camera.min.js)
+[![build status](https://img.shields.io/github/workflow/status/flekschas/dom-2d-camera/build?color=139ce9&style=flat-square)](https://github.com/flekschas/dom-2d-camera/actions?query=workflow%3Abuild)
+[![file size](http://img.badgesize.io/https://unpkg.com/dom-2d-camera/dist/dom-2d-camera.min.js?compression=gzip&color=0dacd4&style=flat-square)](https://bundlephobia.com/result?p=dom-2d-camera)
 [![code style prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 [![demo](https://img.shields.io/badge/demo-online-6ae3c7.svg)](https://flekschas.github.io/regl-scatterplot/)
 
