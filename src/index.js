@@ -207,8 +207,10 @@ const dom2dCamera = (
   const mouseMoveHandler = event => {
     prevMouseX = mouseX;
     prevMouseY = mouseY;
-    mouseX = event.clientX - left;
-    mouseY = event.clientY - top;
+
+    // Normalize mouse coordinates
+    mouseX = event.clientX - left + window.scrollX;
+    mouseY = event.clientY - top + window.scrollY;
 
     onMouseMove(event);
   };

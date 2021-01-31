@@ -1,6 +1,7 @@
 ## v1.2.1
 
 - Fix an issue in switching between `defaultMouseDownMoveAction`
+- Fix an issue with the zoom center when the page is scrolled
 
 ## v1.2.0
 
