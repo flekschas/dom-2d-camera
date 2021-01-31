@@ -82,7 +82,8 @@ const dom2dCamera = (
     if (
       isPan &&
       isLeftMousePressed &&
-      (panOnMouseDownMove || !isMouseDownMoveModActive)
+      ((panOnMouseDownMove && !isMouseDownMoveModActive) ||
+        (!panOnMouseDownMove && isMouseDownMoveModActive))
     ) {
       // To pan 1:1 we need to half the width and height because the uniform
       // coordinate system goes from -1 to 1.
@@ -108,7 +109,8 @@ const dom2dCamera = (
     if (
       isRotate &&
       isLeftMousePressed &&
-      (!panOnMouseDownMove || isMouseDownMoveModActive)
+      ((panOnMouseDownMove && isMouseDownMoveModActive) ||
+        (!panOnMouseDownMove && !isMouseDownMoveModActive))
     ) {
       const wh = width / 2;
       const hh = height / 2;

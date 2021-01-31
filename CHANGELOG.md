@@ -1,3 +1,7 @@
+## v1.2.1
+
+- Fix an issue in switching between `defaultMouseDownMoveAction`
+
 ## v1.2.0
 
 - Change panning and rotating modification behavior:
