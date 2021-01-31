@@ -1,6 +1,12 @@
+## v1.2.0
+
+- Change panning and rotating modification behavior:
+  - The default bahvior on mouse down + move is now defined via `defaultMouseDownMoveAction`, which is `pan` by default and can also be `rotate`
+  - To dynamically switch the behavior to `rotate` or `pan` via a modifier key, `rotateKey` is now renamed to `mouseDownMoveModKey`, which is by default `alt`
+
 ## v1.1.0
 
-- Allow changing the modofier key for rotating the camera via `rotateKey`. Valid keys are `alt`, `shift`, `ctrl`, and `cmd`
+- Allow changing the modifier key for rotating the camera via `rotateKey`. Valid keys are `alt`, `shift`, `ctrl`, and `cmd`
 
 ## v1.0.2
 

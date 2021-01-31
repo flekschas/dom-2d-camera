@@ -1,13 +1,13 @@
 import createCamera from "camera-2d-simple";
 import { vec2 } from "gl-matrix";
 
-const VALID_ROTATE_KEYS = ["alt", "shift", "meta", "cmd", "ctrl"];
+const MOUSE_DOWN_MOVE_ACTIONS = ["pan", "rotate"];
 const KEY_MAP = {
   alt: "altKey",
-  shift: "shiftKey",
-  meta: "metaKey",
   cmd: "metaKey",
-  ctrl: "ctrlKey"
+  ctrl: "ctrlKey",
+  meta: "metaKey",
+  shift: "shiftKey"
 };
 
 const dom2dCamera = (
@@ -22,9 +22,10 @@ const dom2dCamera = (
     panSpeed = 1,
     isRotate = true,
     rotateSpeed = 1,
+    defaultMouseDownMoveAction = "pan",
+    mouseDownMoveModKey = "alt",
     isZoom = true,
     zoomSpeed = 1,
-    rotateKey = "alt",
     viewCenter,
     scaleBounds,
     onKeyDown = () => {},
@@ -55,7 +56,9 @@ const dom2dCamera = (
   let width = 1;
   let height = 1;
   let aspectRatio = 1;
-  let isAlt = false;
+  let isMouseDownMoveModActive = false;
+
+  let panOnMouseDownMove = defaultMouseDownMoveAction === "pan";
 
   const transformPanX = isNdc
     ? dX => (dX / width) * 2 * aspectRatio // to normalized device coords
@@ -76,7 +79,11 @@ const dom2dCamera = (
 
     isChanged = false;
 
-    if (isPan && isLeftMousePressed && !isAlt) {
+    if (
+      isPan &&
+      isLeftMousePressed &&
+      (panOnMouseDownMove || !isMouseDownMoveModActive)
+    ) {
       // To pan 1:1 we need to half the width and height because the uniform
       // coordinate system goes from -1 to 1.
       camera.pan([
@@ -98,7 +105,11 @@ const dom2dCamera = (
       isChanged = true;
     }
 
-    if (isRotate && isLeftMousePressed && isAlt) {
+    if (
+      isRotate &&
+      isLeftMousePressed &&
+      (!panOnMouseDownMove || isMouseDownMoveModActive)
+    ) {
       const wh = width / 2;
       const hh = height / 2;
       const x1 = prevMouseX - wh;
@@ -125,6 +136,7 @@ const dom2dCamera = (
   };
 
   const config = ({
+    defaultMouseDownMoveAction: newDefaultMouseDownMoveAction = null,
     isFixed: newIsFixed = null,
     isPan: newIsPan = null,
     isRotate: newIsRotate = null,
@@ -132,8 +144,16 @@ const dom2dCamera = (
     panSpeed: newPanSpeed = null,
     rotateSpeed: newRotateSpeed = null,
     zoomSpeed: newZoomSpeed = null,
-    rotateKey: newRotateKey = null
+    mouseDownMoveModKey: newMouseDownMoveModKey = null
   } = {}) => {
+    defaultMouseDownMoveAction =
+      newDefaultMouseDownMoveAction !== null &&
+      MOUSE_DOWN_MOVE_ACTIONS.includes(newDefaultMouseDownMoveAction)
+        ? newDefaultMouseDownMoveAction
+        : defaultMouseDownMoveAction;
+
+    panOnMouseDownMove = defaultMouseDownMoveAction === "pan";
+
     isFixed = newIsFixed !== null ? newIsFixed : isFixed;
     isPan = newIsPan !== null ? newIsPan : isPan;
     isRotate = newIsRotate !== null ? newIsRotate : isRotate;
@@ -141,10 +161,12 @@ const dom2dCamera = (
     panSpeed = +newPanSpeed > 0 ? newPanSpeed : panSpeed;
     rotateSpeed = +newRotateSpeed > 0 ? newRotateSpeed : rotateSpeed;
     zoomSpeed = +newZoomSpeed > 0 ? newZoomSpeed : zoomSpeed;
-    rotateKey =
-      newRotateKey !== null && VALID_ROTATE_KEYS.includes(newRotateKey)
-        ? newRotateKey
-        : rotateKey;
+
+    mouseDownMoveModKey =
+      newMouseDownMoveModKey !== null &&
+      Object.keys(KEY_MAP).includes(newMouseDownMoveModKey)
+        ? newMouseDownMoveModKey
+        : mouseDownMoveModKey;
   };
 
   const refresh = () => {
@@ -157,13 +179,13 @@ const dom2dCamera = (
   };
 
   const keyUpHandler = event => {
-    isAlt = false;
+    isMouseDownMoveModActive = false;
 
     onKeyUp(event);
   };
 
   const keyDownHandler = event => {
-    isAlt = event[KEY_MAP[rotateKey]];
+    isMouseDownMoveModActive = event[KEY_MAP[mouseDownMoveModKey]];
 
     onKeyDown(event);
   };
