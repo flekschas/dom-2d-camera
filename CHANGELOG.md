@@ -1,3 +1,7 @@
+## v1.2.2
+
+- Fix an issue with zooming in situations with nested scroll bars. Note, this change makes `refresh()` irrelevant. You do not need to call it anymore.
+
 ## v1.2.1
 
 - Fix an issue in switching between `defaultMouseDownMoveAction`

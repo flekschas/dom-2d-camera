@@ -51,8 +51,6 @@ const dom2dCamera = (
   let isLeftMousePressed = false;
   let yScroll = 0;
 
-  let top = 0;
-  let left = 0;
   let width = 1;
   let height = 1;
   let aspectRatio = 1;
@@ -172,12 +170,9 @@ const dom2dCamera = (
   };
 
   const refresh = () => {
-    const bBox = element.getBoundingClientRect();
-    top = bBox.top;
-    left = bBox.left;
-    width = bBox.width;
-    height = bBox.height;
-    aspectRatio = width / height;
+    console.warn(
+      "refresh() is deprecated. You do not have to call it anymore."
+    );
   };
 
   const keyUpHandler = event => {
@@ -209,8 +204,14 @@ const dom2dCamera = (
     prevMouseY = mouseY;
 
     // Normalize mouse coordinates
-    mouseX = event.clientX - left + window.scrollX;
-    mouseY = event.clientY - top + window.scrollY;
+    const bBox = element.getBoundingClientRect();
+    mouseX = event.clientX - bBox.left;
+    mouseY = event.clientY - bBox.top;
+
+    // Since we caculated the bBox already lets update some other props too
+    width = bBox.width;
+    height = bBox.height;
+    aspectRatio = width / height;
 
     onMouseMove(event);
   };
