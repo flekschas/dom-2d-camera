@@ -243,8 +243,6 @@ const dom2dCamera = (
   window.addEventListener("mousemove", mouseMoveHandler, { passive: true });
   element.addEventListener("wheel", wheelHandler, { passive: false });
 
-  refresh();
-
   camera.config = config;
   camera.dispose = dispose;
   camera.refresh = refresh;

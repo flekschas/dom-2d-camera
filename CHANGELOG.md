@@ -1,3 +1,7 @@
+## v1.2.3
+
+- Avoid calling `refresh` internally as it's not needed.
+
 ## v1.2.2
 
 - Fix an issue with zooming in situations with nested scroll bars. Note, this change makes `refresh()` irrelevant. You do not need to call it anymore.
