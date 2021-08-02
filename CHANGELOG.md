@@ -1,3 +1,11 @@
+## v2.0.0
+
+- Support x and y independent panning and zooming via `isPan: [isPanX, isPanY]` and `isZoom: [isZoomX, isZoomY]`
+
+**Breaking Changes:**
+
+- New major version due to `camera-2d-simple` being bumped to `v3`. For details see [the change log](https://github.com/flekschas/camera-2d/blob/master/CHANGELOG.md#v300).
+
 ## v1.2.3
 
 - Avoid calling `refresh` internally as it's not needed.

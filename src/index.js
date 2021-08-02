@@ -1,5 +1,5 @@
-import createCamera from "camera-2d-simple";
 import { vec2 } from "gl-matrix";
+import createCamera from "camera-2d-simple";
 
 const MOUSE_DOWN_MOVE_ACTIONS = ["pan", "rotate"];
 const KEY_MAP = {
@@ -28,6 +28,7 @@ const dom2dCamera = (
     zoomSpeed = 1,
     viewCenter,
     scaleBounds,
+    translationBounds,
     onKeyDown = () => {},
     onKeyUp = () => {},
     onMouseDown = () => {},
@@ -41,9 +42,9 @@ const dom2dCamera = (
     distance,
     rotation,
     viewCenter,
-    scaleBounds
+    scaleBounds,
+    translationBounds
   );
-  let isChanged = false;
   let mouseX = 0;
   let mouseY = 0;
   let prevMouseX = 0;
@@ -54,7 +55,13 @@ const dom2dCamera = (
   let width = 1;
   let height = 1;
   let aspectRatio = 1;
+
+  let isChanged = false;
   let isMouseDownMoveModActive = false;
+  let isPanX = Array.isArray(isPan) ? Boolean(isPan[0]) : isPan;
+  let isPanY = Array.isArray(isPan) ? Boolean(isPan[1]) : isPan;
+  let isZoomX = Array.isArray(isZoom) ? Boolean(isZoom[0]) : isZoom;
+  let isZoomY = Array.isArray(isZoom) ? Boolean(isZoom[1]) : isZoom;
 
   let panOnMouseDownMove = defaultMouseDownMoveAction === "pan";
 
@@ -78,28 +85,33 @@ const dom2dCamera = (
     isChanged = false;
 
     if (
-      isPan &&
+      (isPanX || isPanY) &&
       isLeftMousePressed &&
       ((panOnMouseDownMove && !isMouseDownMoveModActive) ||
         (!panOnMouseDownMove && isMouseDownMoveModActive))
     ) {
-      // To pan 1:1 we need to half the width and height because the uniform
-      // coordinate system goes from -1 to 1.
-      camera.pan([
-        transformPanX(panSpeed * (mouseX - prevMouseX)),
-        transformPanY(panSpeed * (prevMouseY - mouseY))
-      ]);
+      const transformedPanX = isPanX
+        ? transformPanX(panSpeed * (mouseX - prevMouseX))
+        : 0;
+
+      const transformedPanY = isPanY
+        ? transformPanY(panSpeed * (mouseY - prevMouseY))
+        : 0;
+
+      camera.pan([transformedPanX, transformedPanY]);
       isChanged = true;
     }
 
     if (isZoom && yScroll) {
       const dZ = zoomSpeed * Math.exp(yScroll / height);
 
-      // Get normalized device coordinates (NDC)
       const transformedX = transformScaleX(mouseX);
       const transformedY = transformScaleY(mouseY);
 
-      camera.scale(1 / dZ, [transformedX, transformedY]);
+      camera.scale(
+        [isZoomX ? 1 / dZ : 1, isZoomY ? 1 / dZ : 1],
+        [transformedX, transformedY]
+      );
 
       isChanged = true;
     }

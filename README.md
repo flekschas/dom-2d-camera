@@ -46,9 +46,9 @@ The following options are available:
 - `rotation`: rotation in radians around the z axis. [dtype: number, default: `0`]
 - `isNdc`: if `true` the camera operates in [normalized device coordinates](https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/WebGL_model_view_projection). This is useful when the camera is used in a WebGL program. [dtype: bool, default: `true`]
 - `isFixed`: if `true` panning, rotating, and zooming is disabled. [dtype: bool, default: `false`]
-- `isPan`: if `true` panning is enabled. [dtype: bool, default: `true`]
+- `isPan`: if `true` x and y panning is enabled. [dtype: bool | [bool, bool], default: `true`]
 - `isRotate`: if `true` rotation is enabled. [dtype: bool, default: `true`]
-- `isZoom`: if `true` zooming is enabled. [dtype: bool, default: `true`]
+- `isZoom`: if `true` x and y zooming is enabled. [dtype: bool | [bool, bool], default: `true`]
 - `panSpeed`: panning speed. [dtype: number, default: `1`]
 - `rotateSpeed`: rotation speed. [dtype: number, default: `1`]
 - `zoomSpeed`: zooming speed. [dtype: number, default: `1`]
@@ -90,9 +90,9 @@ Unsubscribes all event listeners.
 Configure the canvas camera. `options` accepts the following options:
 
 - `isFixed`: if `true` panning, rotating, and zooming is disabled. [default: `false`]
-- `isPan`: if `true` panning is enabled. [dtype: bool, default: `true`]
+- `isPan`: if `true` x and y panning is enabled. [dtype: bool | [bool, bool], default: `true`]
 - `isRotate`: if `true` rotation is enabled. [dtype: bool, default: `true`]
-- `isZoom`: if `true` zooming is enabled. [dtype: bool, default: `true`]
+- `isZoom`: if `true` x and y zooming is enabled. [dtype: bool | [bool, bool], default: `true`]
 - `panSpeed`: panning speed. [dtype: float, default: `1.0`]
 - `rotateSpeed`: rotation speed. [dtype: float, default: `1.0`]
 - `zoomSpeed`: zooming speed. [dtype: float, default: `1.0`]
