@@ -83,6 +83,8 @@ const dom2dCamera = (
     if (isFixed) return false;
 
     isChanged = false;
+    const currentMouseX = mouseX;
+    const currentMouseY = mouseY;
 
     if (
       (isPanX || isPanY) &&
@@ -91,11 +93,11 @@ const dom2dCamera = (
         (!panOnMouseDownMove && isMouseDownMoveModActive))
     ) {
       const transformedPanX = isPanX
-        ? transformPanX(panSpeed * (mouseX - prevMouseX))
+        ? transformPanX(panSpeed * (currentMouseX - prevMouseX))
         : 0;
 
       const transformedPanY = isPanY
-        ? transformPanY(panSpeed * (mouseY - prevMouseY))
+        ? transformPanY(panSpeed * (currentMouseY - prevMouseY))
         : 0;
 
       camera.pan([transformedPanX, transformedPanY]);
@@ -105,8 +107,8 @@ const dom2dCamera = (
     if (isZoom && yScroll) {
       const dZ = zoomSpeed * Math.exp(yScroll / height);
 
-      const transformedX = transformScaleX(mouseX);
-      const transformedY = transformScaleY(mouseY);
+      const transformedX = transformScaleX(currentMouseX);
+      const transformedY = transformScaleY(currentMouseY);
 
       camera.scale(
         [isZoomX ? 1 / dZ : 1, isZoomY ? 1 / dZ : 1],
@@ -126,8 +128,8 @@ const dom2dCamera = (
       const hh = height / 2;
       const x1 = prevMouseX - wh;
       const y1 = hh - prevMouseY;
-      const x2 = mouseX - wh;
-      const y2 = hh - mouseY;
+      const x2 = currentMouseX - wh;
+      const y2 = hh - currentMouseY;
       // Angle between the start and end mouse position with respect to the
       // viewport center
       const radians = vec2.angle([x1, y1], [x2, y2]);
@@ -141,8 +143,8 @@ const dom2dCamera = (
 
     // Reset scroll delta and mouse position
     yScroll = 0;
-    prevMouseX = mouseX;
-    prevMouseY = mouseY;
+    prevMouseX = currentMouseX;
+    prevMouseY = currentMouseY;
 
     return isChanged;
   };
@@ -212,9 +214,6 @@ const dom2dCamera = (
   };
 
   const mouseMoveHandler = event => {
-    prevMouseX = mouseX;
-    prevMouseY = mouseY;
-
     // Normalize mouse coordinates
     const bBox = element.getBoundingClientRect();
     mouseX = event.clientX - bBox.left;

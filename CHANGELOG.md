@@ -1,3 +1,7 @@
+## v2.0.1
+
+- Fix _laggy_ drag behavior, which was caused by incorrect updates of `previousMouseX` and `previousMouseY`
+
 ## v2.0.0
 
 - Support x and y independent panning and zooming via `isPan: [isPanX, isPanY]` and `isZoom: [isZoomX, isZoomY]`
