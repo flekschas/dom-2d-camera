@@ -23,11 +23,10 @@ Also see:
 ## Install
 
 ```
-npm i dom-2d-camera
-
-// Peer dependencies are not automatically included. To install them do:
-npm i camera-2d-simple gl-matrix
+npm i dom-2d-camera gl-matrix
 ```
+
+Note that `gl-matrix` is a peer dependency and not automatically bundled with dom-2d-camera as you probably want to use it in your main application.
 
 ## API
 
@@ -75,7 +74,7 @@ Call this at the beginning of each frame to update the current position of the c
 
 #### `camera.refresh()`
 
-Call after the width and height of the related canvas object changed.
+Call after the width and height of the related `canvas` object changed.
 
 _Note: the camera does **not** update the width and height unless you tell it to using this function!_
 

@@ -184,9 +184,10 @@ const dom2dCamera = (
   };
 
   const refresh = () => {
-    console.warn(
-      "refresh() is deprecated. You do not have to call it anymore."
-    );
+    const bBox = element.getBoundingClientRect();
+    width = bBox.width;
+    height = bBox.height;
+    aspectRatio = width / height;
   };
 
   const keyUpHandler = event => {
@@ -213,22 +214,29 @@ const dom2dCamera = (
     onMouseDown(event);
   };
 
+  const offsetXSupport =
+    document.createEvent("MouseEvent").offsetX !== undefined;
+
+  const updateMouseXY = offsetXSupport
+    ? event => {
+        mouseX = event.offsetX;
+        mouseY = event.offsetY;
+      }
+    : event => {
+        const bBox = element.getBoundingClientRect();
+        mouseX = event.clientX - bBox.left;
+        mouseY = event.clientY - bBox.top;
+      };
+
   const mouseMoveHandler = event => {
-    // Normalize mouse coordinates
-    const bBox = element.getBoundingClientRect();
-    mouseX = event.clientX - bBox.left;
-    mouseY = event.clientY - bBox.top;
-
-    // Since we caculated the bBox already lets update some other props too
-    width = bBox.width;
-    height = bBox.height;
-    aspectRatio = width / height;
-
+    updateMouseXY(event);
     onMouseMove(event);
   };
 
   const wheelHandler = event => {
     event.preventDefault();
+
+    updateMouseXY(event);
 
     const scale = event.deltaMode === 1 ? 12 : 1;
 

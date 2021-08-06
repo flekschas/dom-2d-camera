@@ -1,3 +1,11 @@
+## v2.0.2
+
+- Fix incorrect mouse position when zooming without having focus the browser window.
+
+**Important:**
+
+- Revert the deprecation of `refresh()`. Please call `camera.refresh()` when the `canvas` element was resized. This allows speeding up mouseMove and wheel event handler by avoiding an expensive `getBoundingClientRect()` call.
+
 ## v2.0.1
 
 - Fix _laggy_ drag behavior, which was caused by incorrect updates of `previousMouseX` and `previousMouseY`
