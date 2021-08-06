@@ -1,3 +1,7 @@
+## v2.0.3
+
+- Hotfix for v2.0.2
+
 ## v2.0.2
 
 - Fix incorrect mouse position when zooming without having focus the browser window.

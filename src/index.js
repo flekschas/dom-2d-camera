@@ -267,6 +267,8 @@ const dom2dCamera = (
   camera.refresh = refresh;
   camera.tick = tick;
 
+  refresh();
+
   return camera;
 };
 
