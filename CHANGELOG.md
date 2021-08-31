@@ -1,6 +1,10 @@
+## v2.1.0
+
+- Make sure that `tick()` returns `true` when the `camera` has been changed programmatically
+
 ## v2.0.3
 
-- Hotfix for v2.0.2
+- Hotfix for v2.0.2!
 
 ## v2.0.2
 

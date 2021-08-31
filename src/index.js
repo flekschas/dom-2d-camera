@@ -56,7 +56,8 @@ const dom2dCamera = (
   let height = 1;
   let aspectRatio = 1;
 
-  let isChanged = false;
+  let isInteractivelyChanged = false;
+  let isProgrammaticallyChanged = false;
   let isMouseDownMoveModActive = false;
   let isPanX = Array.isArray(isPan) ? Boolean(isPan[0]) : isPan;
   let isPanY = Array.isArray(isPan) ? Boolean(isPan[1]) : isPan;
@@ -82,7 +83,7 @@ const dom2dCamera = (
   const tick = () => {
     if (isFixed) return false;
 
-    isChanged = false;
+    isInteractivelyChanged = false;
     const currentMouseX = mouseX;
     const currentMouseY = mouseY;
 
@@ -101,7 +102,7 @@ const dom2dCamera = (
         : 0;
 
       camera.pan([transformedPanX, transformedPanY]);
-      isChanged = true;
+      isInteractivelyChanged = true;
     }
 
     if (isZoom && yScroll) {
@@ -115,7 +116,7 @@ const dom2dCamera = (
         [transformedX, transformedY]
       );
 
-      isChanged = true;
+      isInteractivelyChanged = true;
     }
 
     if (
@@ -138,13 +139,17 @@ const dom2dCamera = (
 
       camera.rotate(rotateSpeed * radians * Math.sign(cross));
 
-      isChanged = true;
+      isInteractivelyChanged = true;
     }
 
     // Reset scroll delta and mouse position
     yScroll = 0;
     prevMouseX = currentMouseX;
     prevMouseY = currentMouseY;
+
+    const isChanged = isInteractivelyChanged || isProgrammaticallyChanged;
+
+    isProgrammaticallyChanged = false;
 
     return isChanged;
   };
@@ -266,6 +271,27 @@ const dom2dCamera = (
   camera.dispose = dispose;
   camera.refresh = refresh;
   camera.tick = tick;
+
+  const withProgrammaticChange = fn =>
+    function() {
+      fn.apply(null, arguments);
+      isProgrammaticallyChanged = true;
+    };
+
+  camera.lookAt = withProgrammaticChange(camera.lookAt);
+  camera.translate = withProgrammaticChange(camera.translate);
+  camera.pan = withProgrammaticChange(camera.pan);
+  camera.rotate = withProgrammaticChange(camera.rotate);
+  camera.scale = withProgrammaticChange(camera.scale);
+  camera.zoom = withProgrammaticChange(camera.zoom);
+  camera.reset = withProgrammaticChange(camera.reset);
+  camera.set = withProgrammaticChange(camera.set);
+  camera.setScaleBounds = withProgrammaticChange(camera.setScaleBounds);
+  camera.setTranslationBounds = withProgrammaticChange(
+    camera.setTranslationBounds
+  );
+  camera.setView = withProgrammaticChange(camera.setView);
+  camera.setViewCenter = withProgrammaticChange(camera.setViewCenter);
 
   refresh();
 
