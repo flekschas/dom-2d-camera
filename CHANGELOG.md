@@ -1,6 +1,7 @@
 ## v2.2.0
 
 - Allow inverting the horizontal and vertical panning direction via `isPanInverted: [false, true]`. This can be useful in conjunction with WebGL.
+- Fix a glitch during panning when the mouse cursor leaves the `<canvas />` element.
 
 ## v2.1.0
 

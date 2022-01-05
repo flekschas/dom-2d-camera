@@ -48,6 +48,8 @@ const dom2dCamera = (
   );
   let mouseX = 0;
   let mouseY = 0;
+  let mouseRelX = 0;
+  let mouseRelY = 0;
   let prevMouseX = 0;
   let prevMouseY = 0;
   let isLeftMousePressed = false;
@@ -131,8 +133,8 @@ const dom2dCamera = (
     if (isZoom && yScroll) {
       const dZ = zoomSpeed * Math.exp(yScroll / height);
 
-      const transformedX = transformScaleX(currentMouseX);
-      const transformedY = transformScaleY(currentMouseY);
+      const transformedX = transformScaleX(mouseRelX);
+      const transformedY = transformScaleY(mouseRelY);
 
       camera.scale(
         [isZoomX ? 1 / dZ : 1, isZoomY ? 1 / dZ : 1],
@@ -250,16 +252,21 @@ const dom2dCamera = (
   const offsetXSupport =
     document.createEvent("MouseEvent").offsetX !== undefined;
 
-  const updateMouseXY = offsetXSupport
+  const updateMouseRelXY = offsetXSupport
     ? event => {
-        mouseX = event.offsetX;
-        mouseY = event.offsetY;
+        mouseRelX = event.offsetX;
+        mouseRelY = event.offsetY;
       }
     : event => {
         const bBox = element.getBoundingClientRect();
-        mouseX = event.clientX - bBox.left;
-        mouseY = event.clientY - bBox.top;
+        mouseRelX = event.clientX - bBox.left;
+        mouseRelY = event.clientY - bBox.top;
       };
+
+  const updateMouseXY = event => {
+    mouseX = event.clientX;
+    mouseY = event.clientY;
+  };
 
   const mouseMoveHandler = event => {
     updateMouseXY(event);
@@ -270,6 +277,7 @@ const dom2dCamera = (
     event.preventDefault();
 
     updateMouseXY(event);
+    updateMouseRelXY(event);
 
     const scale = event.deltaMode === 1 ? 12 : 1;
 
