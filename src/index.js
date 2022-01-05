@@ -19,6 +19,7 @@ const dom2dCamera = (
     isNdc = true,
     isFixed = false,
     isPan = true,
+    isPanInverted = false,
     panSpeed = 1,
     isRotate = true,
     rotateSpeed = 1,
@@ -59,12 +60,30 @@ const dom2dCamera = (
   let isInteractivelyChanged = false;
   let isProgrammaticallyChanged = false;
   let isMouseDownMoveModActive = false;
-  let isPanX = Array.isArray(isPan) ? Boolean(isPan[0]) : isPan;
-  let isPanY = Array.isArray(isPan) ? Boolean(isPan[1]) : isPan;
-  let isZoomX = Array.isArray(isZoom) ? Boolean(isZoom[0]) : isZoom;
-  let isZoomY = Array.isArray(isZoom) ? Boolean(isZoom[1]) : isZoom;
 
   let panOnMouseDownMove = defaultMouseDownMoveAction === "pan";
+
+  let isPanX = isPan;
+  let isPanY = isPan;
+  let isPanXInverted = isPanInverted;
+  let isPanYInverted = isPanInverted;
+  let isZoomX = isZoom;
+  let isZoomY = isZoom;
+
+  const spreadXYSettings = () => {
+    isPanX = Array.isArray(isPan) ? Boolean(isPan[0]) : isPan;
+    isPanY = Array.isArray(isPan) ? Boolean(isPan[1]) : isPan;
+    isPanXInverted = Array.isArray(isPanInverted)
+      ? Boolean(isPanInverted[0])
+      : isPanInverted;
+    isPanYInverted = Array.isArray(isPanInverted)
+      ? Boolean(isPanInverted[1])
+      : isPanInverted;
+    isZoomX = Array.isArray(isZoom) ? Boolean(isZoom[0]) : isZoom;
+    isZoomY = Array.isArray(isZoom) ? Boolean(isZoom[1]) : isZoom;
+  };
+
+  spreadXYSettings();
 
   const transformPanX = isNdc
     ? dX => (dX / width) * 2 * aspectRatio // to normalized device coords
@@ -93,13 +112,17 @@ const dom2dCamera = (
       ((panOnMouseDownMove && !isMouseDownMoveModActive) ||
         (!panOnMouseDownMove && isMouseDownMoveModActive))
     ) {
-      const transformedPanX = isPanX
-        ? transformPanX(panSpeed * (currentMouseX - prevMouseX))
-        : 0;
+      const dX = isPanXInverted
+        ? prevMouseX - currentMouseX
+        : currentMouseX - prevMouseX;
 
-      const transformedPanY = isPanY
-        ? transformPanY(panSpeed * (currentMouseY - prevMouseY))
-        : 0;
+      const transformedPanX = isPanX ? transformPanX(panSpeed * dX) : 0;
+
+      const dY = isPanYInverted
+        ? prevMouseY - currentMouseY
+        : currentMouseY - prevMouseY;
+
+      const transformedPanY = isPanY ? transformPanY(panSpeed * dY) : 0;
 
       camera.pan([transformedPanX, transformedPanY]);
       isInteractivelyChanged = true;
@@ -158,6 +181,7 @@ const dom2dCamera = (
     defaultMouseDownMoveAction: newDefaultMouseDownMoveAction = null,
     isFixed: newIsFixed = null,
     isPan: newIsPan = null,
+    isPanInverted: newIsPanInverted = null,
     isRotate: newIsRotate = null,
     isZoom: newIsZoom = null,
     panSpeed: newPanSpeed = null,
@@ -175,11 +199,15 @@ const dom2dCamera = (
 
     isFixed = newIsFixed !== null ? newIsFixed : isFixed;
     isPan = newIsPan !== null ? newIsPan : isPan;
+    isPanInverted =
+      newIsPanInverted !== null ? newIsPanInverted : isPanInverted;
     isRotate = newIsRotate !== null ? newIsRotate : isRotate;
     isZoom = newIsZoom !== null ? newIsZoom : isZoom;
     panSpeed = +newPanSpeed > 0 ? newPanSpeed : panSpeed;
     rotateSpeed = +newRotateSpeed > 0 ? newRotateSpeed : rotateSpeed;
     zoomSpeed = +newZoomSpeed > 0 ? newZoomSpeed : zoomSpeed;
+
+    spreadXYSettings();
 
     mouseDownMoveModKey =
       newMouseDownMoveModKey !== null &&
