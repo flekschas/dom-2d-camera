@@ -126,8 +126,10 @@ const dom2dCamera = (
 
       const transformedPanY = isPanY ? transformPanY(panSpeed * dY) : 0;
 
-      camera.pan([transformedPanX, transformedPanY]);
-      isInteractivelyChanged = true;
+      if (transformedPanX !== 0 || transformedPanY !== 0) {
+        camera.pan([transformedPanX, transformedPanY]);
+        isInteractivelyChanged = true;
+      }
     }
 
     if (isZoom && yScroll) {
@@ -148,7 +150,10 @@ const dom2dCamera = (
       isRotate &&
       isLeftMousePressed &&
       ((panOnMouseDownMove && isMouseDownMoveModActive) ||
-        (!panOnMouseDownMove && !isMouseDownMoveModActive))
+        (!panOnMouseDownMove && !isMouseDownMoveModActive)) &&
+      Math.abs(prevMouseX - currentMouseX) +
+        Math.abs(prevMouseX - currentMouseX) >
+        0
     ) {
       const wh = width / 2;
       const hh = height / 2;

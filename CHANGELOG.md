@@ -1,3 +1,7 @@
+## v2.2.1
+
+- Make sure that `camera.tick()` only returns `true` when the user effectively panned or rotated
+
 ## v2.2.0
 
 - Allow inverting the horizontal and vertical panning direction via `isPanInverted: [false, true]`. This can be useful in conjunction with WebGL.
