@@ -1,3 +1,7 @@
+## v2.2.2
+
+- Fix incorrect default value of `isPanInverted` introduced in [v2.2.0](#v2.2.0) to be backward compatible
+
 ## v2.2.1
 
 - Make sure that `camera.tick()` only returns `true` when the user effectively panned or rotated
