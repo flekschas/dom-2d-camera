@@ -152,7 +152,7 @@ const dom2dCamera = (
       ((panOnMouseDownMove && isMouseDownMoveModActive) ||
         (!panOnMouseDownMove && !isMouseDownMoveModActive)) &&
       Math.abs(prevMouseX - currentMouseX) +
-        Math.abs(prevMouseX - currentMouseX) >
+        Math.abs(prevMouseY - currentMouseY) >
         0
     ) {
       const wh = width / 2;

@@ -1,3 +1,7 @@
+## v2.2.3
+
+- Fix a bug preventing rotation in certain edge cases.
+
 ## v2.2.2
 
 - Fix incorrect default value of `isPanInverted` introduced in [v2.2.0](#v2.2.0) to be backward compatible
