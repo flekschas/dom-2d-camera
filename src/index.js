@@ -53,7 +53,7 @@ const dom2dCamera = (
   let prevMouseX = 0;
   let prevMouseY = 0;
   let isLeftMousePressed = false;
-  let yScroll = 0;
+  let scrollDist = 0;
 
   let width = 1;
   let height = 1;
@@ -132,8 +132,8 @@ const dom2dCamera = (
       }
     }
 
-    if (isZoom && yScroll) {
-      const dZ = zoomSpeed * Math.exp(yScroll / height);
+    if ((isZoomX || isZoomY) && scrollDist) {
+      const dZ = zoomSpeed * Math.exp(scrollDist / height);
 
       const transformedX = transformScaleX(mouseRelX);
       const transformedY = transformScaleY(mouseRelY);
@@ -173,7 +173,7 @@ const dom2dCamera = (
     }
 
     // Reset scroll delta and mouse position
-    yScroll = 0;
+    scrollDist = 0;
     prevMouseX = currentMouseX;
     prevMouseY = currentMouseY;
 
@@ -279,14 +279,16 @@ const dom2dCamera = (
   };
 
   const wheelHandler = event => {
-    event.preventDefault();
+    if (isZoomX || isZoomY) {
+      event.preventDefault();
 
-    updateMouseXY(event);
-    updateMouseRelXY(event);
+      updateMouseXY(event);
+      updateMouseRelXY(event);
 
-    const scale = event.deltaMode === 1 ? 12 : 1;
+      const scale = event.deltaMode === 1 ? 12 : 1;
 
-    yScroll += scale * (event.deltaY || 0);
+      scrollDist += scale * (event.deltaY || event.deltaX || 0);
+    }
 
     onWheel(event);
   };

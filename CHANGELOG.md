@@ -1,3 +1,8 @@
+## v2.2.4
+
+- Avoid preventing wheel events when `isZoom` is `false`.
+- Allow zooming when holding SHIFT
+
 ## v2.2.3
 
 - Fix a bug preventing rotation in certain edge cases.
