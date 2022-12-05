@@ -1,3 +1,7 @@
+## v2.2.5
+
+- Fix return value of `tick()` for programmatic changes while interactive panning and zooming is fixed.
+
 ## v2.2.4
 
 - Avoid preventing wheel events when `isZoom` is `false`.

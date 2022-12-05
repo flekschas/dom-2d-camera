@@ -102,7 +102,11 @@ const dom2dCamera = (
     : y => y;
 
   const tick = () => {
-    if (isFixed) return false;
+    if (isFixed) {
+      const isChanged = isProgrammaticallyChanged;
+      isProgrammaticallyChanged = false;
+      return isChanged;
+    }
 
     isInteractivelyChanged = false;
     const currentMouseX = mouseX;
