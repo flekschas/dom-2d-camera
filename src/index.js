@@ -283,7 +283,7 @@ const dom2dCamera = (
   };
 
   const wheelHandler = event => {
-    if (isZoomX || isZoomY) {
+    if ((isZoomX || isZoomY) && !isFixed) {
       event.preventDefault();
 
       updateMouseXY(event);

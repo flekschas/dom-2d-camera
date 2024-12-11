@@ -1,3 +1,7 @@
+## v2.2.6
+
+- Fix: do not prevent default wheel behavior when the camera is fixed.
+
 ## v2.2.5
 
 - Fix return value of `tick()` for programmatic changes while interactive panning and zooming is fixed.
